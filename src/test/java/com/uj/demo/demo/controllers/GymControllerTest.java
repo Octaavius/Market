@@ -1,16 +1,13 @@
 package com.uj.demo.demo.controllers;
 
 import com.uj.demo.demo.misc.Calculator;
-import com.uj.demo.demo.repositories.CoachRepository;
-import com.uj.demo.demo.repositories.EventRepository;
-import com.uj.demo.demo.repositories.GymRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.web.servlet.MockMvc;
 
-import static junit.framework.TestCase.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.hamcrest.Matchers.containsString;
 import static org.mockito.Mockito.*;
 import static org.springframework.http.MediaType.APPLICATION_JSON;
