@@ -40,11 +40,13 @@ class GymControllerTest {
     @Test
     public void testAddWithMock() {
         Calculator calculatorMock = mock(Calculator.class);
-        when(calculatorMock.add(3, 7)).thenReturn(10);
+        when(calculatorMock.add(3, 7)).thenReturn(11);
 
-        int result = calculatorMock.add(3, 7);
+        int result1 = calculatorMock.add(3, 7);
+        int result2 = calculatorMock.add(2, 7);
 
-        assertEquals(10, result);
+        //assertEquals(9, result2); Mistake!
+        assertEquals(11, result1);
     }
     @Test
     public void testAddWithSpy() {

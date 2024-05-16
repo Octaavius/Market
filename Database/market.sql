@@ -1,5 +1,9 @@
 CREATE DATABASE IF NOT EXISTS market_db;
 
+--CREATE USER 'admin'@'%' IDENTIFIED BY 'admin';
+--GRANT ALL PRIVILEGES ON market_db.* TO 'admin'@'%' WITH GRANT OPTION;
+--FLUSH PRIVILEGES;
+
 USE market_db;
 
 CREATE TABLE employee (
