@@ -8,7 +8,7 @@ services:
       - "3306:3306"
     environment:
       MYSQL_ROOT_PASSWORD: pass
-      MYSQL_DATABASE: demo_db
+      MYSQL_DATABASE: market_db
       MYSQL_USER: admin
       MYSQL_PASSWORD: admin
     volumes:
@@ -23,7 +23,7 @@ services:
     ports:
       - 8082:8082
     environment:
-      - SPRING_DATASOURCE_URL=jdbc:mysql://db:3306/demo_db
+      - SPRING_DATASOURCE_URL=jdbc:mysql://db:3306/market_db
       - SPRING_DATASOURCE_USERNAME=admin
       - SPRING_DATASOURCE_PASSWORD=admin
       - SPRING_JPA_HIBERNATE_DDL_AUTO=update
