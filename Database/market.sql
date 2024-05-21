@@ -14,6 +14,6 @@ CREATE TABLE employee (
 );
 
 -- Insert initial data
-INSERT INTO users (name, email) VALUES
+INSERT INTO employee (name, email) VALUES
 ('Andrei', 'Rabau', 'andrei.rabau@student.uj.edu.pl'),
 ('Andrii', 'Pokora', 'and.pokora@student.uj.edu.pl');
