@@ -18,7 +18,7 @@ public class Club {
     private String address;
     @Getter
     private String openingHours;
-    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private final List<Event> events = new ArrayList<>();
 
     public Club() {
