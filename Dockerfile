@@ -1,5 +1,17 @@
-FROM openjdk:17-jdk
+# Use an official OpenJDK runtime as a parent image
+FROM openjdk:17-jdk-slim
+
+# Set the working directory
 WORKDIR /app
-COPY build/libs/demo-0.0.1-SNAPSHOT.jar app.jar
-EXPOSE 8082
-ENTRYPOINT ["java", "-jar", "app.jar", "--server.port=8082"]
+
+# Add a volume pointing to /tmp
+VOLUME /tmp
+
+# The application's JAR file (adjust this name if necessary)
+ARG JAR_FILE=build/libs/MyMarket-0.0.1-SNAPSHOT.jar
+
+# Add the application's JAR file to the container
+COPY ${JAR_FILE} app.jar
+
+# Run the jar file
+ENTRYPOINT ["java", "-jar", "/app/app.jar"]
