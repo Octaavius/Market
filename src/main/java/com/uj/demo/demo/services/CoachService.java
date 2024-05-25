@@ -1,8 +1,6 @@
 package com.uj.demo.demo.services;
 
-import com.uj.demo.demo.models.Coach;
 import com.uj.demo.demo.repositories.CoachRepository;
-import com.uj.demo.demo.repositories.OrderRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
