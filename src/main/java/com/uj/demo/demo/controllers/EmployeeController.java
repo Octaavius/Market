@@ -19,6 +19,4 @@ public class EmployeeController {
     public List<Employee> getAllEmployyes() {
         return employeeService.getAllEmployees();
     }
-
-
 }
