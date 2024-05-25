@@ -1,11 +1,11 @@
 package com.uj.demo.demo.controllers;
 
+import com.uj.demo.demo.models.Employee;
 import com.uj.demo.demo.models.User;
 import com.uj.demo.demo.services.UserService;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/users")
@@ -14,6 +14,11 @@ public class UserController {
 
     public UserController(UserService userService) {
         this.userService = userService;
+    }
+
+    @GetMapping
+    public List<User> getAllEmployyes() {
+        return userService.getAllUsers();
     }
 
     @PostMapping
