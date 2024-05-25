@@ -66,10 +66,6 @@ public class Product {
         return type;
     }
 
-    public void setType(ProductType type) {
-        this.type = type;
-    }
-
     public String getBrand() {
         return brand;
     }
