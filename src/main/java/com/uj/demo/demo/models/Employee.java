@@ -35,11 +35,6 @@ public class Employee {
         return name;
     }
 
-    public Employee() {
-        this.id = 0L;
-        this.name = "";
-    }
-
     public Employee(Long id, String name) {
         this.id = id;
         this.name = name;
