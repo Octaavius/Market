@@ -17,8 +17,7 @@ public class Coach {
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private final List<Event> events = new ArrayList<>();
 
-    public Coach() {
-    }
+    public Coach() {}
 
     public Coach(Long id, String name) {
         this.id = id;
@@ -32,5 +31,6 @@ public class Coach {
     public void setName(String name) {
         this.name = name;
     }
+
 
 }
