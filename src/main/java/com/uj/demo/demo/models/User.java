@@ -15,10 +15,6 @@ public class User {
 
     private String password;
 
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private final List<Product> cart = new ArrayList<>();
 
@@ -30,8 +26,16 @@ public class User {
         return login;
     }
 
+    public void setLogin(String login) {
+        this.login = login;
+    }
+
     public String getPassword() {
         return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public List<Product> getCart() {

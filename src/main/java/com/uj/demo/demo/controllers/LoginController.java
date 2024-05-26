@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.ui.Model;
 
 @Controller
+@RequestMapping("login")
 public class LoginController {
 
     private final UserService userService;
@@ -15,15 +16,18 @@ public class LoginController {
         this.userService = userService;
     }
 
-    @GetMapping("/login")
-    public String login() { return "login"; }
+    @GetMapping
+    public String login(Model model) {
+        model.addAttribute("user", new User());
+        return "login";
+    }
 
-    @PostMapping("/login")
+    @PostMapping
     public String login(@ModelAttribute("user") User user, Model model) {
         boolean loggedInUser = userService.userExists(user);
         if (loggedInUser) {
-            model.addAttribute("message", "Login successful!");
-            return "index";  // Redirect to home page
+            //model.addAttribute("message", "Login successful!");
+            return "redirect:/";  // Redirect to home page
         } else {
             model.addAttribute("message", "Invalid username or password.");
             return "login";  // Stay on the login page

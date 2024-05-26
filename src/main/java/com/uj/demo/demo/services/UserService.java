@@ -22,6 +22,8 @@ public class UserService {
     public User saveUser(User user) {return userRepository.save(user);}
 
     public boolean userExists(User user) {
-        return userRepository.findByLogin(user.getLogin()).getPassword().equals(user.getPassword());
+        User userFromDb = userRepository.findByLogin(user.getLogin());
+        if(userFromDb == null) return false;
+        return userFromDb.getPassword().equals(user.getPassword());
     }
 }
