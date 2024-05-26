@@ -27,6 +27,7 @@ public class RegistrationController {
         boolean existingUser = userService.userExists(user);
         if (!existingUser) {
             //model.addAttribute("message", "Sign up successful!");
+            userService.saveUser(user);
             return "redirect:/";  // Redirect to home page
         } else {
             model.addAttribute("message", "Such username already exists.");
