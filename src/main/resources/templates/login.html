@@ -137,14 +137,14 @@
     <div class="shape"></div>
     <div class="shape"></div>
 </div>
-<form th:action="@{/login}" method="post">
+<form th:action="@{/login}" th:object="${user}" method="post">
     <h3>Login Here</h3>
 
-    <label for="username">Username</label>
-    <input type="text" placeholder="Email or Phone" id="username">
+    <label for="login">Username</label>
+    <input type="text" placeholder="Username" id="login" th:field="*{login}">
 
     <label for="password">Password</label>
-    <input type="password" placeholder="Password" id="password">
+    <input type="password" placeholder="Password" id="password" th:field="*{password}">
 
     <button>Log In</button>
     <div class="social">
