@@ -1,22 +1,33 @@
 package com.uj.demo.demo.controllers;
 
-import com.uj.demo.demo.services.LoginService;
 import com.uj.demo.demo.models.User;
+import com.uj.demo.demo.services.UserService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.ui.Model;
 
 @Controller
 public class LoginController {
-    private final LoginService loginService;
 
-    public LoginController(LoginService loginService) {
-        this.loginService = loginService;
+    private final UserService userService;
+
+    public LoginController(UserService userService) {
+        this.userService = userService;
     }
 
     @GetMapping("/login")
     public String login() { return "login"; }
 
-//    @PostMapping
-//    public User addUser(@RequestBody User user) { return loginService.saveUser(user); }
+    @PostMapping("/login")
+    public String login(@ModelAttribute("user") User user, Model model) {
+        boolean loggedInUser = userService.userExists(user);
+        if (loggedInUser) {
+            model.addAttribute("message", "Login successful!");
+            return "index";  // Redirect to home page
+        } else {
+            model.addAttribute("message", "Invalid username or password.");
+            return "login";  // Stay on the login page
+        }
+    }
 }
 
