@@ -1,20 +1,24 @@
 package com.uj.demo.demo.models;
 
 import jakarta.persistence.*;
-import lombok.Getter;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
 public class User {
-    @Getter
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Getter
+
     private String login;
-    @Getter String password;
+
+    private String password;
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private final List<Product> cart = new ArrayList<>();
 

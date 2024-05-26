@@ -6,36 +6,27 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import lombok.Getter;
 
 @Entity
 public class Product {
-    @Getter
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Getter
     @Enumerated(EnumType.STRING)
     private ProductType type;
 
-    @Getter
     private String brand;
 
-    @Getter
     private String model;
 
-    @Getter
     private String color;
 
-    @Getter
     @Enumerated(EnumType.STRING)
     private Sex sex;
 
-    @Getter
     private String sizes;
 
-    @Getter
     private double price;
 
     protected Product() {}
@@ -49,5 +40,37 @@ public class Product {
         this.sex = sex;
         this.sizes = sizes;
         this.price = price;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public ProductType getType() {
+        return type;
+    }
+
+    public String getBrand() {
+        return brand;
+    }
+
+    public String getModel() {
+        return model;
+    }
+
+    public String getColor() {
+        return color;
+    }
+
+    public Sex getSex() {
+        return sex;
+    }
+
+    public String getSizes() {
+        return sizes;
+    }
+
+    public double getPrice() {
+        return price;
     }
 }

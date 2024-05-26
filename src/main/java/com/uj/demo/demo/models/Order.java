@@ -1,7 +1,6 @@
 package com.uj.demo.demo.models;
 
 import jakarta.persistence.*;
-import lombok.Getter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -9,15 +8,12 @@ import java.util.List;
 @Entity
 @Table(name = "orders")  // Renaming the table to avoid using reserved keyword
 public class Order {
-    @Getter
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Getter
     private Long userId;
 
-    @Getter
     @ManyToMany  // Assuming ManyToMany relationship with Product
     @JoinTable(
             name = "order_product",
@@ -45,4 +41,6 @@ public class Order {
     public List<Product> getProducts() {
         return products;
     }
+
 }
+

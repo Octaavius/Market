@@ -20,4 +20,8 @@ public class UserService {
     }
 
     public User saveUser(User user) {return userRepository.save(user);}
+
+    public boolean userExists(User user) {
+        return userRepository.findByLogin(user.getLogin()).getPassword().equals(user.getPassword());
+    }
 }

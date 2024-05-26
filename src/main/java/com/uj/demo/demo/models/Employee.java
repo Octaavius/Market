@@ -4,20 +4,23 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import lombok.Getter;
 
 @Entity
 public class Employee {
-    @Getter
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Getter
+
     private String name;
-    @Getter
+
     private String surname;
-    @Getter
+
     private String email;
+
+    public Employee() {
+
+    }
 
     public void setEmail(String email) {
         this.email = email;
