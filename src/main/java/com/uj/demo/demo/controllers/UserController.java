@@ -1,6 +1,5 @@
 package com.uj.demo.demo.controllers;
 
-import com.uj.demo.demo.models.Employee;
 import com.uj.demo.demo.models.User;
 import com.uj.demo.demo.services.UserService;
 import org.springframework.web.bind.annotation.*;
