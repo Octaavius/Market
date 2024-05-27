@@ -23,17 +23,18 @@ public class OrderService {
 
     @Transactional
     public Order saveOrder(Order order) {
-        List<Product> existingProducts = new ArrayList<>();
-        for (Product product : order.getProducts()) {
-            Product existingProduct = productRepository.findByModel(product.getModel());
-            if (existingProduct != null) {
-                existingProducts.add(existingProduct);
-            } else {
-                existingProducts.add(product);
-            }
-        }
-        order.getProducts().clear();
-        order.getProducts().addAll(existingProducts);
-        return orderRepository.save(order);
+//        List<Product> existingProducts = new ArrayList<>();
+//        for (Product product : order.getProducts()) {
+//            Product existingProduct = productRepository.findByModel(product.getModel());
+//            if (existingProduct != null) {
+//                existingProducts.add(existingProduct);
+//            } else {
+//                existingProducts.add(product);
+//            }
+//        }
+//        order.getProducts().clear();
+//        order.getProducts().addAll(existingProducts);
+//        return orderRepository.save(order);
+        return null;
     }
 }

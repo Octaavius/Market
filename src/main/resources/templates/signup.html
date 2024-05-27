@@ -18,6 +18,10 @@
 <form th:action="@{/signup}" th:object="${user}" method="post">
     <h3>Create account</h3>
     <p th:text="${message}"></p>
+
+    <label for="name">Name</label>
+    <input type="text" placeholder="Name" id="name" th:field="*{name}">
+
     <label for="login">Username</label>
     <input type="text" placeholder="Username" id="login" th:field="*{login}">
 

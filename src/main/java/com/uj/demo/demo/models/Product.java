@@ -20,7 +20,7 @@ public class Product {
     @Enumerated(EnumType.STRING)
     private Sex sex;
 
-    private String sizes;
+    private String size;
     private int quantity;
 
     public void setType(ProductType type) {
@@ -83,12 +83,12 @@ public class Product {
         this.sex = sex;
     }
 
-    public String getSizes() {
-        return sizes;
+    public String getSize() {
+        return size;
     }
 
     public void setSizes(String sizes) {
-        this.sizes = sizes;
+        this.size = sizes;
     }
 
     public double getPrice() {
@@ -106,7 +106,7 @@ public class Product {
         this.model = model;
         this.color = color;
         this.sex = sex;
-        this.sizes = sizes;
+        this.size = sizes;
         this.quantity = quantity;
         this.price = price;
     }

@@ -4,6 +4,8 @@ import com.uj.demo.demo.models.Product;
 import com.uj.demo.demo.repositories.ProductRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class ProductService {
     private final ProductRepository productRepository;
@@ -12,10 +14,16 @@ public class ProductService {
     }
 
     public Product save(Product product) {
-        Product existingProduct = productRepository.findByModel(product.getModel());
-        if (existingProduct != null) {
-            return null;
+        List<Product> existingProducts = productRepository.findByModel(product.getModel());
+        for (Product exProduct : existingProducts){
+            if (exProduct.getSize().equals(product.getSize())) {
+                return null;
+            }
         }
         return productRepository.save(product);
+    }
+
+    public List<Product> findByName(String name) {
+        return productRepository.findByModel(name);
     }
 }
