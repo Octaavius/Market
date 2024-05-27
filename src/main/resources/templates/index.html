@@ -89,7 +89,7 @@
         <p th:if="${products == null}">0 items</p>
     </div>
 
-    <div class="w3-row w3-grayscale">
+    <div class="w3-row">
         <div class="w3-col l3 s6" th:each="product : ${products}">
             <div class="w3-container">
                 <img th:src="@{'/images/' + ${product.model} + '.jpg'}" style="width:100%" th:alt="${product.model}">
