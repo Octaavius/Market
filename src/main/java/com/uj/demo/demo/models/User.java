@@ -34,7 +34,7 @@ public class User {
     private String login;
     @Getter String password;
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    private final List<Product> cart = new ArrayList<>();
+    private final List<Product> products = new ArrayList<>();
 
     public void setId(Long id) {
         this.id = id;
@@ -61,7 +61,7 @@ public class User {
     }
 
     public List<Product> getCart() {
-        return cart;
+        return products;
     }
 
     public User() {}
