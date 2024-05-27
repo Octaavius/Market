@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/products")
@@ -31,5 +32,11 @@ public class ProductController {
     @GetMapping("/{name}")
     public List<Product> getProductsByName(@PathVariable String name) {
         return productService.findByName(name);
+    }
+
+    @GetMapping
+    public List<Product> getAllDifferentProducts(){
+        List<Product> newProducts = productService.getAll();
+        return newProducts.stream().distinct().collect(Collectors.toList());
     }
 }

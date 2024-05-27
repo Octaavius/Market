@@ -2,6 +2,8 @@ package com.uj.demo.demo.models;
 
 import jakarta.persistence.*;
 
+import java.util.Objects;
+
 @Entity
 public class Product {
     @Id
@@ -109,5 +111,19 @@ public class Product {
         this.size = sizes;
         this.quantity = quantity;
         this.price = price;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Product product = (Product) o;
+        return Objects.equals(brand, product.brand) &&
+                Objects.equals(model, product.model) &&
+                Objects.equals(color, product.color);
+    }
+    @Override
+    public int hashCode() {
+        return Objects.hash(brand, model, color);
     }
 }

@@ -26,4 +26,6 @@ public class ProductService {
     public List<Product> findByName(String name) {
         return productRepository.findByModel(name);
     }
+
+    public List<Product> getAll() { return productRepository.findAll(); }
 }
