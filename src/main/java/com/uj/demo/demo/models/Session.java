@@ -7,6 +7,7 @@ import java.time.Instant;
 
 @Entity
 public class Session {
+    public static Long currentSessionId = 0L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
