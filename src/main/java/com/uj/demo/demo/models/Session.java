@@ -1,15 +1,9 @@
 package com.uj.demo.demo.models;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @Entity
-@Table(name = "orders")
-public class Order {
-    @Getter
+public class Session {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -18,13 +12,10 @@ public class Order {
     @JoinColumn(name = "user_id")
     private User user;
 
-    @Getter
-    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private final List<Product> products = new ArrayList<>();
+    public Session() {
+    }
 
-    public Order() {}
-
-    public Order(Long id, User user) {
+    public Session(Long id, User user) {
         this.id = id;
         this.user = user;
     }
@@ -33,11 +24,15 @@ public class Order {
         return id;
     }
 
+    public void setId(Long id) {
+        this.id = id;
+    }
+
     public User getUser() {
         return user;
     }
 
-    public List<Product> getProducts() {
-        return products;
+    public void setUser(User user) {
+        this.user = user;
     }
 }

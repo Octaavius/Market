@@ -13,6 +13,24 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Getter
+    private String name;
+
+    @Getter
+    private String login;
+
+    @Getter
+    private String password;
+
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    private final List<Product> products = new ArrayList<>();
+
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY, optional = false)
+    private Session session;
+
+    public User() {
+    }
+
     public User(Long id, String name, String login, String password) {
         this.id = id;
         this.name = name;
@@ -27,14 +45,6 @@ public class User {
     public String getName() {
         return name;
     }
-
-    @Getter
-    private String name;
-    @Getter
-    private String login;
-    @Getter String password;
-    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    private final List<Product> products = new ArrayList<>();
 
     public void setId(Long id) {
         this.id = id;
@@ -64,5 +74,11 @@ public class User {
         return products;
     }
 
-    public User() {}
+    public Session getSession() {
+        return session;
+    }
+
+    public void setSession(Session session) {
+        this.session = session;
+    }
 }
