@@ -2,9 +2,10 @@ package com.uj.demo.demo.controllers;
 
 import com.uj.demo.demo.models.User;
 import com.uj.demo.demo.services.UserService;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
 @RequestMapping("login")
@@ -23,10 +24,10 @@ public class LoginController {
     }
 
     @PostMapping
-    public String login(@ModelAttribute("user") User user, Model model) {
-        boolean loggedInUser = userService.userExists(user);
-        if (loggedInUser) {
-            //model.addAttribute("message", "Login successful!");
+    public String login(@ModelAttribute("user") User user, Model model, HttpSession session) {
+        User userFromDb = userService.findUser(user);
+        if (userFromDb != null) {
+            session.setAttribute(userFromDb.getId().toString(), userFromDb.getId());
             return "redirect:/";  // Redirect to home page
         } else {
             model.addAttribute("message", "Invalid username or password.");
