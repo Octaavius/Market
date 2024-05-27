@@ -2,6 +2,8 @@ package com.uj.demo.demo.models;
 
 import jakarta.persistence.*;
 
+import java.time.Clock;
+
 @Entity
 public class Session {
     @Id
@@ -12,12 +14,23 @@ public class Session {
     @JoinColumn(name = "user_id")
     private User user;
 
+    private Clock lastLogin;
+
+    public Session(Long id, User user, Clock lastLogin) {
+        this.id = id;
+        this.user = user;
+        this.lastLogin = lastLogin;
+    }
+
     public Session() {
     }
 
-    public Session(Long id, User user) {
-        this.id = id;
-        this.user = user;
+    public void setLastLogin(Clock lastLogin) {
+        this.lastLogin = lastLogin;
+    }
+
+    public Clock getLastLogin() {
+        return lastLogin;
     }
 
     public Long getId() {
