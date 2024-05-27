@@ -1,34 +1,26 @@
 package com.uj.demo.demo.models;
 
 import jakarta.persistence.*;
-import lombok.Getter;
 
 @Entity
 public class Product {
-    @Getter
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Getter
     @Enumerated(EnumType.STRING)
     private ProductType type;
 
-    @Getter
     private String brand;
 
     private String model;
 
-    @Getter
     private String color;
 
-    @Getter
     @Enumerated(EnumType.STRING)
     private Sex sex;
 
-    @Getter
     private String sizes;
-    @Getter
     private int quantity;
 
     public void setType(ProductType type) {
@@ -43,7 +35,6 @@ public class Product {
         this.quantity = quantity;
     }
 
-    @Getter
     private double price;
 
     protected Product() {}

@@ -1,25 +1,20 @@
 package com.uj.demo.demo.models;
 
 import jakarta.persistence.*;
-import lombok.Getter;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
 public class User {
-    @Getter
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Getter
     private String name;
 
-    @Getter
     private String login;
 
-    @Getter
     private String password;
 
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)

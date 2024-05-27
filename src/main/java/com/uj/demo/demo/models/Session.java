@@ -3,6 +3,7 @@ package com.uj.demo.demo.models;
 import jakarta.persistence.*;
 
 import java.time.Clock;
+import java.time.Instant;
 
 @Entity
 public class Session {
@@ -14,9 +15,9 @@ public class Session {
     @JoinColumn(name = "user_id")
     private User user;
 
-    private Clock lastLogin;
+    private Instant lastLogin = Clock.systemDefaultZone().instant();
 
-    public Session(Long id, User user, Clock lastLogin) {
+    public Session(Long id, User user, Instant lastLogin) {
         this.id = id;
         this.user = user;
         this.lastLogin = lastLogin;
@@ -25,11 +26,11 @@ public class Session {
     public Session() {
     }
 
-    public void setLastLogin(Clock lastLogin) {
+    public void setLastLogin(Instant lastLogin) {
         this.lastLogin = lastLogin;
     }
 
-    public Clock getLastLogin() {
+    public Instant getLastLogin() {
         return lastLogin;
     }
 

@@ -24,10 +24,9 @@ public class RegistrationController {
 
     @PostMapping
     public String signup(@ModelAttribute("user") User user, Model model) {
-        boolean existingUser = userService.userExists(user);
-        if (!existingUser) {
+        User newUser = userService.saveUser(user);
+        if (newUser != null) {
             //model.addAttribute("message", "Sign up successful!");
-            userService.saveUser(user);
             return "redirect:/";  // Redirect to home page
         } else {
             model.addAttribute("message", "Such username already exists.");

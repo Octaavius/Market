@@ -1,7 +1,6 @@
 package com.uj.demo.demo.models;
 
 import jakarta.persistence.*;
-import lombok.Getter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -9,7 +8,6 @@ import java.util.List;
 @Entity
 @Table(name = "orders")
 public class Order {
-    @Getter
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -18,7 +16,6 @@ public class Order {
     @JoinColumn(name = "user_id")
     private User user;
 
-    @Getter
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private final List<Product> products = new ArrayList<>();
 
