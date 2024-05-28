@@ -90,6 +90,7 @@
     <div class="w3-row">
         <div class="w3-col l3 s6" th:each="product : ${products}">
             <div class="w3-container">
+                <a th:href="'products/' + ${product.model}"/>
                 <img th:src="@{'/images/' + ${product.model} + '.jpg'}" style="width:100%" th:alt="${product.model}">
                 <p th:text="${product.brand} + ' '  + ${product.model} + ' - $' + ${product.price}"></p>
             </div>

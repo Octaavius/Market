@@ -29,10 +29,25 @@ public class ProductController {
         return addedProducts;
     }
 
-    @GetMapping("/{name}")
     @ResponseBody
-    public List<Product> getProductsByName(@PathVariable String name) {
+    public List<Product> getProductsByName(String name) {
         return productService.findByName(name);
+    }
+
+    public List<String> getAllSizes(String name){
+        List<Product> products = getProductsByName(name);
+        List<String> sizes = new ArrayList<>();
+        for (Product product : products){
+            sizes.add(product.getSize());
+        }
+        return sizes;
+    }
+
+    @GetMapping("{name}")
+    public String index(@PathVariable("name") String name, Model model) {
+        model.addAttribute("product", getProductsByName(name).get(0));
+        model.addAttribute("sizes", getAllSizes(name).stream().sorted().collect(Collectors.toList()));
+        return "product";
     }
 
     @GetMapping()
@@ -41,4 +56,6 @@ public class ProductController {
         List<Product> newProducts = productService.getAll();
         return newProducts.stream().distinct().collect(Collectors.toList());
     }
+
+
 }
