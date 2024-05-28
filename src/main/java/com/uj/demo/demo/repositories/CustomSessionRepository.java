@@ -9,7 +9,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.lang.Nullable;
 
-public interface SessionRepository extends JpaRepository<Session, Long> {
+public interface CustomSessionRepository extends JpaRepository<Session, Long> {
     <S extends Session> S save(@Nullable S session);
 
     Session findByUserId(Long userId);
