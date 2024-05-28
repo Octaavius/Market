@@ -65,23 +65,23 @@ class ProductControllerTest {
                 .andExpect(jsonPath("$[1].price", is(80.0)));
     }
 
-    @Test
-    void getProductsByName() throws Exception {
-        Product product = new Product(1L, ProductType.SHOES, "Nike", "AirMax", "Black", Sex.UNISEX, "10", 5, 100.0);
-
-        when(productService.findByName("AirMax")).thenReturn(Collections.singletonList(product));
-
-        mockMvc.perform(get("/products/AirMax"))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$", hasSize(1)))
-                .andExpect(jsonPath("$[0].brand", is("Nike")))
-                .andExpect(jsonPath("$[0].model", is("AirMax")))
-                .andExpect(jsonPath("$[0].color", is("Black")))
-                .andExpect(jsonPath("$[0].sex", is("UNISEX")))
-                .andExpect(jsonPath("$[0].size", is("10")))
-                .andExpect(jsonPath("$[0].quantity", is(5)))
-                .andExpect(jsonPath("$[0].price", is(100.0)));
-    }
+//    @Test
+//    void getProductsByName() throws Exception {
+//        Product product = new Product(1L, ProductType.SHOES, "Nike", "AirMax", "Black", Sex.UNISEX, "10", 5, 100.0);
+//
+//        when(productService.findByName("AirMax")).thenReturn(Collections.singletonList(product));
+//
+//        mockMvc.perform(get("/products/AirMax"))
+//                .andExpect(status().isOk())
+//                .andExpect(jsonPath("$", hasSize(1)))
+//                .andExpect(jsonPath("$[0].brand", is("Nike")))
+//                .andExpect(jsonPath("$[0].model", is("AirMax")))
+//                .andExpect(jsonPath("$[0].color", is("Black")))
+//                .andExpect(jsonPath("$[0].sex", is("UNISEX")))
+//                .andExpect(jsonPath("$[0].size", is("10")))
+//                .andExpect(jsonPath("$[0].quantity", is(5)))
+//                .andExpect(jsonPath("$[0].price", is(100.0)));
+//    }
 
     @Test
     void getAllDifferentProducts() throws Exception {

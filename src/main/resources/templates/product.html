@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Product</title>
+  <link rel="stylesheet" th:href="@{/css/product.css}">
+</head>
+<body>
+<header>
+  <div class="logo">
+    <h1><a th:href="@{/}">Market</a></h1>
+  </div>
+  <nav>
+    <ul>
+      <li><a href="#">T-shirts</a></li>
+      <li><a href="#">Pants</a></li>
+      <li><a href="#">Sweaters</a></li>
+      <li><a href="#">Shorts</a></li>
+      <li><a href="#">Shoes</a></li>
+    </ul>
+  </nav>
+  <div class="user-actions">
+    <a href="#"><img src="path-to-search-icon.png" alt="Search"></a>
+    <a href="#"><img src="path-to-user-icon.png" alt="User"></a>
+    <a href="#"><img src="path-to-favorite-icon.png" alt="Favorites"></a>
+    <a href="#"><img src="path-to-cart-icon.png" alt="Cart"></a>
+  </div>
+</header>
+<main>
+  <section class="product-details">
+    <div class="main-image">
+      <img th:src="@{'/images/' + ${product.model} + '.jpg'}" alt="Main Product Image">
+    </div>
+    <div class="product-info">
+      <h2 th:text="${product.brand} + ' ' + ${product.model}"></h2>
+      <p class="price" th:text="${product.price} + ' €'"></p>
+      <div class="size-selection">
+        <label for="size">Select size</label>
+        <select id="size">
+          <option value="">Select size</option>
+          <option th:each="size : ${sizes}" th:value="${size}" th:text="${size}"></option>
+        </select>
+      </div>
+    </div>
+    <button class="add-to-cart">Add to cart</button>
+  </section>
+</main>
+</body>
+</html>
