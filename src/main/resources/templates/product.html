@@ -34,7 +34,7 @@
     </div>
     <div class="product-info">
       <h2 th:text="${product.brand} + ' ' + ${product.model}"></h2>
-      <p class="price" th:text="${product.price} + ' €'"></p>
+      <p class="price" th:text="${product.price} + ' $'"></p>
       <div class="size-selection">
         <label for="size">Select size</label>
         <select id="size">
@@ -42,8 +42,8 @@
           <option th:each="size : ${sizes}" th:value="${size}" th:text="${size}"></option>
         </select>
       </div>
+      <button class="add-to-cart">Add to cart</button>
     </div>
-    <button class="add-to-cart">Add to cart</button>
   </section>
 </main>
 </body>

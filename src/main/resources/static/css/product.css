@@ -3,9 +3,14 @@ body {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background-color: #f4f4f4;
 }
 
 header {
+  width: 100%;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -51,45 +56,68 @@ nav ul li a:hover {
 }
 
 main {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   padding: 20px;
 }
 
 .product-details {
+  background-color: white;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   display: flex;
+  flex-direction: column;
+  align-items: center;
   gap: 20px;
+  max-width: 400px;
+  width: 100%;
 }
 
 .main-image img {
-  width: 300px;
+  width: 100%;
   height: auto;
   border: 1px solid #ddd;
   border-radius: 8px;
 }
 
 .product-info {
-  max-width: 400px;
+  width: 100%;
 }
 
 .product-info h2 {
   margin: 0;
   font-size: 24px;
   color: #333;
+  text-align: center;
 }
 
 .product-info .price {
   font-size: 20px;
   color: #666;
   margin: 10px 0;
+  text-align: center;
+}
+
+.size-selection {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .size-selection label {
   font-size: 14px;
-  margin-right: 10px;
+  margin-bottom: 10px;
 }
 
 .size-selection select {
   padding: 5px;
   font-size: 14px;
+  width: 100%;
+  max-width: 200px;
 }
 
 .add-to-cart {
@@ -101,6 +129,7 @@ main {
   cursor: pointer;
   border-radius: 4px;
   transition: background-color 0.3s;
+  margin-top: 20px;
 }
 
 .add-to-cart:hover {

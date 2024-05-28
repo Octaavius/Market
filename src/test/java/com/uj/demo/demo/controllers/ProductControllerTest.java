@@ -12,16 +12,13 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.Arrays;
-import java.util.Collections;
 
-import static org.hamcrest.Matchers.hasSize;
-import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.*;
 import static org.mockito.Mockito.*;
 import static org.springframework.http.MediaType.APPLICATION_JSON;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -65,24 +62,6 @@ class ProductControllerTest {
                 .andExpect(jsonPath("$[1].price", is(80.0)));
     }
 
-//    @Test
-//    void getProductsByName() throws Exception {
-//        Product product = new Product(1L, ProductType.SHOES, "Nike", "AirMax", "Black", Sex.UNISEX, "10", 5, 100.0);
-//
-//        when(productService.findByName("AirMax")).thenReturn(Collections.singletonList(product));
-//
-//        mockMvc.perform(get("/products/AirMax"))
-//                .andExpect(status().isOk())
-//                .andExpect(jsonPath("$", hasSize(1)))
-//                .andExpect(jsonPath("$[0].brand", is("Nike")))
-//                .andExpect(jsonPath("$[0].model", is("AirMax")))
-//                .andExpect(jsonPath("$[0].color", is("Black")))
-//                .andExpect(jsonPath("$[0].sex", is("UNISEX")))
-//                .andExpect(jsonPath("$[0].size", is("10")))
-//                .andExpect(jsonPath("$[0].quantity", is(5)))
-//                .andExpect(jsonPath("$[0].price", is(100.0)));
-//    }
-
     @Test
     void getAllDifferentProducts() throws Exception {
         Product product1 = new Product(1L, ProductType.SHOES, "Nike", "AirMax", "Black", Sex.UNISEX, "10", 5, 100.0);
@@ -107,5 +86,21 @@ class ProductControllerTest {
                 .andExpect(jsonPath("$[1].size", is("9")))
                 .andExpect(jsonPath("$[1].quantity", is(10)))
                 .andExpect(jsonPath("$[1].price", is(80.0)));
+    }
+
+    @Test
+    void getOneProduct() throws Exception {
+        Product product1 = new Product(1L, ProductType.SHOES, "Nike", "AirMax", "Black", Sex.UNISEX, "10", 5, 100.0);
+        Product product2 = new Product(2L, ProductType.SHOES, "Nike", "AirMax", "Black", Sex.UNISEX, "11", 5, 100.0);
+
+        when(productService.findByName("Nike AirMax")).thenReturn(Arrays.asList(product1, product2));
+
+        mockMvc.perform(get("/products/Nike AirMax"))
+                .andExpect(status().isOk())
+                .andExpect(model().attributeExists("product"))
+                .andExpect(model().attributeExists("sizes"))
+                .andExpect(model().attribute("product", is(product1)))
+                .andExpect(model().attribute("sizes", containsInAnyOrder("10", "11")))
+                .andExpect(view().name("product"));
     }
 }
