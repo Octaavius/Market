@@ -60,11 +60,14 @@
 
     <!-- Top header -->
     <header class="w3-container w3-xlarge">
+        <p style="float: left" th:text="${username}"></p>
         <p class="w3-right">
             <i class="fa fa-shopping-cart w3-margin-right"></i>
             <i class="fa fa-search"></i>
             <button th:unless="${loggedIn}" onclick="location.href='/login'">Log In</button>
-            <button th:if="${loggedIn}" onclick="location.href='/account'"><i class="fa fa-user"></i></button>
+                <button th:if="${loggedIn}" onclick="location.href='/profile'"><i class="fa fa-user"></i></button>
+                <button th:if="${loggedIn}" onclick="location.href='/logout'">Log out</button>
+        </p>
     </header>
 
     <!-- Image header -->

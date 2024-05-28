@@ -2,11 +2,10 @@ package com.uj.demo.demo.models;
 
 import jakarta.persistence.*;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.io.Serializable;
 
 @Entity
-public class User {
+public class User implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -16,12 +15,6 @@ public class User {
     private String login;
 
     private String password;
-
-    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    private final List<Product> products = new ArrayList<>();
-
-    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY, optional = false)
-    private Session session;
 
     public User() {
     }
@@ -65,15 +58,4 @@ public class User {
         return password;
     }
 
-    public List<Product> getCart() {
-        return products;
-    }
-
-    public Session getSession() {
-        return session;
-    }
-
-    public void setSession(Session session) {
-        this.session = session;
-    }
 }

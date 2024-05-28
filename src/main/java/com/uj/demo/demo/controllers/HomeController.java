@@ -1,7 +1,8 @@
 package com.uj.demo.demo.controllers;
+import com.uj.demo.demo.models.User;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
 import com.uj.demo.demo.services.ProductService;
-import com.uj.demo.demo.models.Session;
 import com.uj.demo.demo.models.Product;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,8 +19,14 @@ public class HomeController {
     }
 
     @GetMapping("/")
-    public String index(Model model) {
-        boolean loggedIn = (Session.currentSessionId != 0);
+    public String index(Model model, HttpSession session) {
+        User user = (User) session.getAttribute("user");
+
+        //boolean loggedIn = (Session.currentSessionId != 0);
+        boolean loggedIn = (user != null);
+        if(loggedIn) {
+            model.addAttribute("username", "Hello, " + user.getName() + "!");
+        }
         model.addAttribute("loggedIn", loggedIn);
         List<Product> products = productService.getAll().stream().distinct().collect(Collectors.toList());;
         model.addAttribute("products", products);

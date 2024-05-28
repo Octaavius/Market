@@ -1,7 +1,6 @@
 package com.uj.demo.demo.services;
 
 import com.uj.demo.demo.models.Order;
-import com.uj.demo.demo.models.Product;
 import com.uj.demo.demo.repositories.OrderRepository;
 import com.uj.demo.demo.repositories.ProductRepository;
 import jakarta.transaction.Transactional;
