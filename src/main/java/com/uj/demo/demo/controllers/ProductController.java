@@ -45,7 +45,7 @@ public class ProductController {
     }
 
     @GetMapping("{name}")
-    public String index(@PathVariable("name") String name, Model model) {
+    public String product(@PathVariable("name") String name, Model model) {
         model.addAttribute("product", getProductsByName(name).get(0));
         model.addAttribute("sizes", getAllSizes(name).stream().sorted().collect(Collectors.toList()));
         return "product";
@@ -54,7 +54,7 @@ public class ProductController {
     @GetMapping()
     @ResponseBody
     public List<Product> getAllDifferentProducts() {
-        List<Product> newProducts = productService.getAll();
+        List<Product> newProducts = productService.findAll();
         return newProducts.stream().distinct().collect(Collectors.toList());
     }
 }

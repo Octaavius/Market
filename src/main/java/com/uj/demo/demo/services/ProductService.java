@@ -4,7 +4,9 @@ import com.uj.demo.demo.models.Product;
 import com.uj.demo.demo.repositories.ProductRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ProductService {
@@ -37,5 +39,10 @@ public class ProductService {
         return (long) -1;
     }
 
-    public List<Product> getAll() { return productRepository.findAll(); }
+    public List<Product> findAll() { return productRepository.findAll(); }
+
+
+    public Product findProductById(Long productId) {
+        return productRepository.findById(productId).orElse(null);
+    }
 }

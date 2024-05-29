@@ -67,17 +67,24 @@
     <!-- Profile -->
     <div class="container" style="display: flex">
         <div class="image-container" style="width: 20%">
-            <img src="/images/Profile_image.png" alt="Image Description">
+            <img src="/images/Profile_image.png" alt="Image Description" style="max-width: 100%">
         </div>
         <div class="orders-container" style="width: 80%">
-            <h2>Order List</h2>
-            <ul>
-                <li>Order 1</li>
-                <li>Order 2</li>
-                <li>Order 3</li>
-                <li>Order 4</li>
-                <li>Order 5</li>
-            </ul>
+            <h2 class="w3-container">Cart</h2>
+            <div class="w3-container w3-text-grey" id="jeans">
+                <p th:if="${products != null}" th:text="${products.size()} + ' items'"></p>
+                <p th:if="${products == null}">0 items</p>
+            </div>
+
+            <div class="w3-row">
+                <div class="w3-col l3 s6" th:each="product : ${products}">
+                    <div class="w3-container">
+                        <a th:href="'products/' + ${product.model}"/>
+                        <img th:src="@{'/images/' + ${product.model} + '.jpg'}" style="width:100%" th:alt="${product.model}">
+                        <p th:text="${product.brand} + ' '  + ${product.model} + ' - $' + ${product.price}"></p>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 

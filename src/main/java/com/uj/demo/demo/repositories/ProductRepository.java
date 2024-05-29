@@ -7,8 +7,10 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.lang.Nullable;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface ProductRepository extends JpaRepository<Product, Long> {
     <S extends Product> S save(@Nullable S product);
     List<Product> findByModel(String name);
+    Optional<Product> findById(Long id);
 }

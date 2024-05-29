@@ -28,7 +28,7 @@ public class HomeController {
             model.addAttribute("greeting", "Hello, " + user.getName() + "!");
         }
         model.addAttribute("loggedIn", loggedIn);
-        List<Product> products = productService.getAll().stream().distinct().collect(Collectors.toList());
+        List<Product> products = productService.findAll().stream().distinct().collect(Collectors.toList());
         model.addAttribute("products", products);
         return "index"; // Ensure this matches the name of your Thymeleaf template
     }
