@@ -89,10 +89,6 @@ public class Product {
         return size;
     }
 
-    public void setSizes(String sizes) {
-        this.size = sizes;
-    }
-
     public double getPrice() {
         return price;
     }

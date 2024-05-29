@@ -44,6 +44,7 @@ public class CartController {
         }
         Long productId = productService.getId(productName, size);
         cart.add(productId);
+        session.setAttribute("cart", cart);
         return "redirect:/profile";
     }
 }
