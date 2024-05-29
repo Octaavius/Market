@@ -27,5 +27,15 @@ public class ProductService {
         return productRepository.findByModel(name);
     }
 
+    public Long getId(String model, String size){
+        List<Product> products = findByName(model);
+        for(Product product: products){
+            if(product.getSize().equals(size)){
+                return product.getId();
+            }
+        }
+        return (long) -1;
+    }
+
     public List<Product> getAll() { return productRepository.findAll(); }
 }

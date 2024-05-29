@@ -1,11 +1,15 @@
 package com.uj.demo.demo.controllers;
 
+import com.uj.demo.demo.models.Product;
 import com.uj.demo.demo.models.User;
 import com.uj.demo.demo.services.UserService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Controller
 public class LoginController {

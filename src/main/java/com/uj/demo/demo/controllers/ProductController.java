@@ -2,6 +2,7 @@ package com.uj.demo.demo.controllers;
 
 import com.uj.demo.demo.models.Product;
 import com.uj.demo.demo.services.ProductService;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -56,6 +57,4 @@ public class ProductController {
         List<Product> newProducts = productService.getAll();
         return newProducts.stream().distinct().collect(Collectors.toList());
     }
-
-
 }
