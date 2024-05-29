@@ -46,8 +46,10 @@ public class ProductController {
 
     @GetMapping("{name}")
     public String product(@PathVariable("name") String name, Model model) {
-        model.addAttribute("product", getProductsByName(name).get(0));
-        model.addAttribute("sizes", getAllSizes(name).stream().sorted().collect(Collectors.toList()));
+        if(getProductsByName(name).size() > 0) {
+            model.addAttribute("product", getProductsByName(name).get(0));
+            model.addAttribute("sizes", getAllSizes(name).stream().sorted().collect(Collectors.toList()));
+        }
         return "product";
     }
 

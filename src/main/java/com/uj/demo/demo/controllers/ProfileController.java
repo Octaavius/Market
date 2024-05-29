@@ -34,7 +34,7 @@ public class ProfileController {
             }
         }
 
-        model.addAttribute("products", products);
+        model.addAttribute("productsInCart", products);
 
         return "profile"; // Ensure this matches the name of your Thymeleaf template
     }

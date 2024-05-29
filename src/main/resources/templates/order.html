@@ -66,33 +66,8 @@
 
     <!-- Profile -->
     <div class="container" style="display: flex">
-        <div class="image-container" style="width: 20%">
-            <img src="/images/Profile_image.png" alt="Image Description" style="max-width: 100%">
-        </div>
-        <div class="orders-container" style="width: 80%">
-            <h2 class="w3-container">Cart</h2>
-            <div class="w3-container w3-text-grey" id="jeans">
-                <p th:if="${productsInCart != null}" th:text="${productsInCart.size()} + ' items'"></p>
-                <p th:if="${productsInCart == null}">0 items</p>
-            </div>
-
-            <div class="w3-row">
-                <div class="w3-col l3 s6" th:each="product : ${productsInCart}">
-                    <div class="w3-container">
-                        <a th:href="'/products/' + ${product.model}">
-                            <img th:src="@{'/images/' + ${product.model} + '.jpg'}" style="width:100%" th:alt="${product.model}">
-                            <p th:text="${product.brand} + ' ' + ${product.model} + ' - $' + ${product.price}"></p>
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="w3-container w3-padding-16">
-            <button class="w3-button w3-green" onclick="location.href='/order'">Order</button>
-        </div>
+        Thank you for your order
     </div>
-
 
     <!-- Subscribe section -->
     <div class="w3-container w3-black w3-padding-32">
