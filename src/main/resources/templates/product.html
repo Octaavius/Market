@@ -39,7 +39,6 @@
         <div class="size-selection">
           <label for="size">Select size</label>
           <select id="size" name="size">
-            <option value="">Select size</option>
             <option th:each="size : ${sizes}" th:value="${size}" th:text="${size}" th:selected="${size == selected}"></option>
           </select>
         </div>
