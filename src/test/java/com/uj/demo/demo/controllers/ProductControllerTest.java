@@ -67,7 +67,7 @@ class ProductControllerTest {
         Product product1 = new Product(1L, ProductType.SHOES, "Nike", "AirMax", "Black", Sex.UNISEX, "10", 5, 100.0);
         Product product2 = new Product(2L, ProductType.SHOES, "Adidas", "Superstar", "White", Sex.UNISEX, "9", 10, 80.0);
 
-        when(productService.getAll()).thenReturn(Arrays.asList(product1, product2));
+        when(productService.findAll()).thenReturn(Arrays.asList(product1, product2));
 
         mockMvc.perform(get("/products"))
                 .andExpect(status().isOk())
