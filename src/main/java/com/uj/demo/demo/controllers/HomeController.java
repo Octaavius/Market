@@ -25,10 +25,10 @@ public class HomeController {
         //boolean loggedIn = (Session.currentSessionId != 0);
         boolean loggedIn = (user != null);
         if(loggedIn) {
-            model.addAttribute("username", "Hello, " + user.getName() + "!");
+            model.addAttribute("greeting", "Hello, " + user.getName() + "!");
         }
         model.addAttribute("loggedIn", loggedIn);
-        List<Product> products = productService.getAll().stream().distinct().collect(Collectors.toList());;
+        List<Product> products = productService.getAll().stream().distinct().collect(Collectors.toList());
         model.addAttribute("products", products);
         return "index"; // Ensure this matches the name of your Thymeleaf template
     }
