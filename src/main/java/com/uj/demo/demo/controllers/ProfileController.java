@@ -27,14 +27,17 @@ public class ProfileController {
 
         List<Product> products = new ArrayList<>();
 
+        double sum = 0;
         if(productsId != null) {
             for(Long productId: productsId){
                 Product product = productService.findProductById(productId);
                 products.add(product);
+                sum += product.getPrice();
             }
         }
 
         model.addAttribute("productsInCart", products);
+        model.addAttribute("sumPrice", sum);
 
         return "profile"; // Ensure this matches the name of your Thymeleaf template
     }
