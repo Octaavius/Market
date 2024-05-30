@@ -16,13 +16,25 @@ public class Order {
     @JoinColumn(name = "user_id")
     private User user;
 
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private final List<Product> products = new ArrayList<>();
+    private List<Product> products = new ArrayList<>();
 
     public Order() {}
 
     public Order(Long id, User user) {
         this.id = id;
+        this.user = user;
+    }
+
+    public Order(User user) {
         this.user = user;
     }
 
@@ -36,5 +48,9 @@ public class Order {
 
     public List<Product> getProducts() {
         return products;
+    }
+
+    public void setProducts(List<Product> products){
+        this.products = products;
     }
 }
