@@ -18,6 +18,7 @@
         }
         .cart-table{
             display: table;
+            padding: 0.01em 16px;
         }
         .cart-row{
             height: 135px;
@@ -34,6 +35,9 @@
             display: block;
         }
         .price-cell{
+            text-align: right;
+        }
+        .sum-cell{
             text-align: right;
         }
     </style>
@@ -91,20 +95,20 @@
         </div>
         <div class="orders-container" style="width: 80%">
             <h2 class="w3-container">Cart</h2>
-            <div class="w3-container w3-text-grey" id="jeans">
+            <div class="w3-container w3-text-grey">
                 <p th:if="${productsInCart != null}" th:text="${productsInCart.size()} + ' items'"></p>
                 <p th:if="${productsInCart == null}">0 items</p>
             </div>
 
             <table class="cart-table">
-                <tr th:each="product : ${productsInCart}" class="cart-row">
-                    <a th:href="'/products/' + ${product.model}">
-                        <td class="image-cell"><img th:src="@{'/images/' + ${product.model} + '.jpg'}" style="max-height:100%" th:alt="${product.model}"></td>
-                        <td><p th:text="${product.brand} + ' ' + ${product.model}"></p></td>
-                        <td class="price-cell"><p th:text="'$' + ${product.price}"></p></td>
-                    </a>
+                <tr th:each="product : ${productsInCart}" class="cart-row" th:attr="data-href=@{'/products/' + ${product.model}}">
+                    <td class="image-cell"><img th:src="@{'/images/' + ${product.model} + '.jpg'}" style="max-height:100%" th:alt="${product.model}"></td>
+                    <td><p th:text="${product.brand} + ' ' + ${product.model}"></p></td>
+                    <td class="size-cell"><p th:text="${product.size}"></p></td>
+                    <td class="price-cell"><p th:text="'$' + ${product.price}"></p></td>
                 </tr>
             </table>
+            <div class="w3-container sum-cell">Sum: 12345</div>
             <div class="w3-container w3-padding-16">
                 <button class="w3-button w3-green" onclick="location.href='/order'" style="width: 100%">Submit order</button>
             </div>

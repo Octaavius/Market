@@ -38,8 +38,7 @@ public class OrderController {
         }
         Order order = new Order(user);
         order.setProducts(productsInCart);
-        Order savedOrder = orderService.saveOrder(order);
-        Long orderId = savedOrder.getId();
+        orderService.saveOrder(order);
         session.setAttribute("cart", new ArrayList<Long>());
         return "order";
     }
