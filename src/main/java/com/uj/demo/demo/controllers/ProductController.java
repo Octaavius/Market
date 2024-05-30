@@ -47,11 +47,12 @@ public class ProductController {
     }
 
     @GetMapping("{name}")
-    public String product(@PathVariable("name") String name, Model model) {
+    public String product(@PathVariable("name") String name, Model model, HttpSession session) {
         if(getProductsByName(name).size() > 0) {
             model.addAttribute("product", getProductsByName(name).get(0));
             model.addAttribute("sizes", getAllSizes(name).stream().sorted().collect(Collectors.toList()));
         }
+        model.addAttribute("loggedIn", session.getAttribute("user") != null);
         return "product";
     }
 
