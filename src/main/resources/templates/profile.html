@@ -108,7 +108,7 @@
                     <td class="price-cell"><p th:text="'$' + ${product.price}"></p></td>
                 </tr>
             </table>
-            <div class="w3-container sum-cell">Sum: 12345</div>
+            <div class="w3-container sum-cell">Sum: <p th:text = "'$' + ${sumPrice}"></p></div>
             <div class="w3-container w3-padding-16">
                 <button class="w3-button w3-green" onclick="location.href='/order'" style="width: 100%">Submit order</button>
             </div>
