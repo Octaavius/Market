@@ -7,6 +7,7 @@ import com.uj.demo.demo.services.OrderService;
 import com.uj.demo.demo.services.ProductService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -24,7 +25,7 @@ public class OrderController {
     @PostMapping
     public Order addOrder(@RequestBody Order order) { return orderService.saveOrder(order); }
     @GetMapping
-    public String order(HttpSession session) {
+    public String order(HttpSession session, Model model) {
         User user = (User) session.getAttribute("user");
         if (user == null) {
             return "redirect:/login";
@@ -32,10 +33,26 @@ public class OrderController {
         List<Long> cart = (List<Long>) session.getAttribute("cart");
         List<Product> productsInCart = new ArrayList<>();
         if (cart != null) {
+            boolean hasNonAvaliableItems = false;
             for (Long id : cart) {
-                productsInCart.add(productService.findProductById(id));
+                Product product = productService.findProductById(id);
+                if(product.getQuantity() == 0){
+                    hasNonAvaliableItems = true;
+                    continue;
+                }
+                productsInCart.add(product);
+            }
+            if(hasNonAvaliableItems || productsInCart.size() == 0){
+                model.addAttribute("productsInCart", productsInCart);
+                return "redirect:/profile";
             }
         }
+
+        for (Product product : productsInCart){
+            product.decreaseQuantity(1);
+            productService.updateProduct(product.getId(), product);
+        }
+
         Order order = new Order(user);
         order.setProducts(productsInCart);
         orderService.saveOrder(order);

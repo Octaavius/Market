@@ -45,4 +45,26 @@ public class ProductService {
     public Product findProductById(Long productId) {
         return productRepository.findById(productId).orElse(null);
     }
+
+    public Product updateProduct(Long productId, Product updatedProductDetails) {
+        Optional<Product> optionalProduct = productRepository.findById(productId);
+
+        if (optionalProduct.isPresent()) {
+            Product existingProduct = optionalProduct.get();
+            existingProduct.setType(updatedProductDetails.getType());
+            existingProduct.setBrand(updatedProductDetails.getBrand());
+            existingProduct.setModel(updatedProductDetails.getModel());
+            existingProduct.setColor(updatedProductDetails.getColor());
+            existingProduct.setSex(updatedProductDetails.getSex());
+            existingProduct.setSize(updatedProductDetails.getSize());
+            existingProduct.setQuantity(updatedProductDetails.getQuantity());
+            existingProduct.setPrice(updatedProductDetails.getPrice());
+
+            // Save the updated product back to the database
+            return productRepository.save(existingProduct);
+        } else {
+            // Handle the case where the product is not found
+            throw new RuntimeException("Product not found with id " + productId);
+        }
+    }
 }

@@ -122,4 +122,18 @@ public class Product {
     public int hashCode() {
         return Objects.hash(brand, model, color);
     }
+
+    public void decreaseQuantity(int amount) {
+        if (amount < 0) {
+            throw new IllegalArgumentException("Amount to decrease cannot be negative");
+        }
+        if (this.quantity < amount) {
+            throw new IllegalArgumentException("Not enough quantity in stock");
+        }
+        this.quantity -= amount;
+    }
+
+    public void setSize(String size) {
+        this.size = size;
+    }
 }

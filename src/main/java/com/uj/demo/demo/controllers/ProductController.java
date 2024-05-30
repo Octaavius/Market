@@ -39,7 +39,9 @@ public class ProductController {
         List<Product> products = getProductsByName(name);
         List<String> sizes = new ArrayList<>();
         for (Product product : products){
-            sizes.add(product.getSize());
+            if(product.getQuantity() > 0) {
+                sizes.add(product.getSize());
+            }
         }
         return sizes;
     }
