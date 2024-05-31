@@ -21,6 +21,10 @@ public class ProfileController {
 
     @GetMapping("/profile")
     public String profile(Model model, HttpSession session) {
+        if(session.getAttribute("user") == null){
+            return "redirect:/login";
+        }
+
         model.addAttribute("username", ((User)session.getAttribute("user")).getName());
 
         List<Long> productsId = (List<Long>) session.getAttribute("cart");
@@ -28,14 +32,19 @@ public class ProfileController {
         List<Product> products = new ArrayList<>();
 
         double sum = 0;
+        boolean cartIsEmpty;
         if(productsId != null) {
+            cartIsEmpty = false;
             for(Long productId: productsId){
                 Product product = productService.findProductById(productId);
                 products.add(product);
                 sum += product.getPrice();
             }
+        } else {
+            cartIsEmpty = true;
         }
 
+        model.addAttribute("cartIsEmpty", cartIsEmpty);
         model.addAttribute("productsInCart", products);
         model.addAttribute("sumPrice", sum);
 

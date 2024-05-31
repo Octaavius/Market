@@ -1,50 +1,34 @@
 package com.uj.demo.demo.controllers;
 
-import com.uj.demo.demo.models.Product;
-import com.uj.demo.demo.models.User;
+import com.uj.demo.demo.services.CartService;
 import com.uj.demo.demo.services.ProductService;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import jakarta.servlet.http.HttpSession;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Controller
 public class CartController {
 
-    private ProductService productService;
+    private final CartService cartService;
 
-    public CartController(ProductService productService) {
-        this.productService = productService;
-    }
-
-    @GetMapping("/cart")
-    public String viewCart(HttpSession session, Model model) {
-        List<Product> cart = (List<Product>) session.getAttribute("cart");
-        if (cart == null) {
-            cart = new ArrayList<>();
-        }
-        model.addAttribute("cart", cart);
-        return "cart";
+    public CartController(CartService cartService) {
+        this.cartService = cartService;
     }
 
     @PostMapping("/add-to-cart")
-    public String addToCart(@RequestParam String productName, @RequestParam String size,  HttpSession session) {
-        List<Long> cart = (List<Long>) session.getAttribute("cart");
-        if (cart == null) {
-            cart = new ArrayList<>();
-            session.setAttribute("cart", cart);
-        }
-        Long productId = productService.getId(productName, size);
-        cart.add(productId);
-        session.setAttribute("cart", cart);
+    public String addToCart(@RequestParam String productName, @RequestParam String size, HttpSession session) {
+        cartService.addItemToCart(productName, size, session);
         return "redirect:/profile";
+    }
+
+    @PostMapping("/remove-from-cart")
+    public String removeFromCart(@RequestParam String productName, @RequestParam String size,  HttpSession session) {
+        cartService.removeItemFromCart(productName, size, session);
+        return "profile";
     }
 }

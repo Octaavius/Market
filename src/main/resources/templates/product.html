@@ -4,6 +4,7 @@
   <title>Product</title>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" type="image/x-icon" href="/images/favicon.ico">
   <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat">
@@ -75,14 +76,12 @@
       <p class="price" th:text="${product.price} + ' $'"></p>
       <form id="add-to-cart-form" th:action="@{'/add-to-cart'}" method="post">
         <input type="hidden" name="productName" th:value="${product.model}">
-        <p>
-        <div class="size-selection">
-          <label for="size">Select size</label>
-          <select id="size" name="size" class="w3-button w3-green">
-            <option th:each="size : ${sizes}" th:value="${size}" th:text="${size}" th:attr="(selected)=${size == selected}"></option>
-          </select>
-        </div>
-        </p>
+          <div class="size-selection">
+            <label for="size">Select size</label>
+            <select id="size" name="size" class="w3-button w3-green">
+              <option th:each="size : ${sizes}" th:value="${size}" th:text="${size}"><!--th:attr="(selected)=${size == selected}"--></option>
+            </select>
+          </div>
         <p>
         <button class="w3-button w3-green" th:if="${loggedIn}" type="submit">Add to cart</button>
         </p>

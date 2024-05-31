@@ -40,6 +40,9 @@
         .sum-cell{
             text-align: right;
         }
+        .whitespace{
+            margin-right: 15px;
+        }
     </style>
 </head>
 <body class="w3-content" style="max-width:1200px">
@@ -99,18 +102,22 @@
                 <p th:if="${productsInCart != null}" th:text="${productsInCart.size()} + ' items'"></p>
                 <p th:if="${productsInCart == null}">0 items</p>
             </div>
-
-            <table class="cart-table">
-                <tr th:each="product : ${productsInCart}" class="cart-row" th:attr="data-href=@{'/products/' + ${product.model}}">
-                    <td class="image-cell"><img th:src="@{'/images/' + ${product.model} + '.jpg'}" style="max-height:100%" th:alt="${product.model}"></td>
-                    <td><p th:text="${product.brand} + ' ' + ${product.model}"></p></td>
-                    <td class="size-cell"><p th:text="${product.size}"></p></td>
-                    <td class="price-cell"><p th:text="'$' + ${product.price}"></p></td>
-                </tr>
-            </table>
-            <div class="w3-container sum-cell">Sum: <p th:text = "'$' + ${sumPrice}"></p></div>
-            <div class="w3-container w3-padding-16">
-                <button class="w3-button w3-green" onclick="location.href='/order'" style="width: 100%">Submit order</button>
+            <div>
+                <table class="cart-table" th:unless="${cartIsEmpty}">
+                    <tr th:each="product : ${productsInCart}" class="cart-row" th:attr="data-href=@{'/products/' + ${product.model}}">
+                        <td class="image-cell"><img th:src="@{'/images/' + ${product.model} + '.jpg'}" style="max-height:100%" th:alt="${product.model}"></td>
+                        <td><p th:text="${product.brand} + ' ' + ${product.model}"></p></td>
+                        <td class="size-cell"><p th:text="${product.size}"></p></td>
+                        <td class="price-cell"><p th:text="'$' + ${product.price}"></p></td>
+                    </tr>
+                </table>
+                <div class="w3-container sum-cell" th:unless="${cartIsEmpty}">Sum: <span th:text = "'$' + ${sumPrice}"></span></div>
+                <div class="w3-container w3-padding-16" th:unless="${cartIsEmpty}">
+                    <button class="w3-button w3-green" onclick="location.href='/order'" style="width: 100%">Submit order</button>
+                </div>
+            </div>
+            <div class="w3-container w3-padding-16" th:if="${cartIsEmpty}">
+                <p>Your cart is empty. <span class="whitespace"></span><button class="w3-button w3-green" onclick="location.href='/'">Shop now</button></p>
             </div>
         </div>
     </div>
