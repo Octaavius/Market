@@ -43,6 +43,13 @@
         .whitespace{
             margin-right: 15px;
         }
+        .remove-item-xmark{
+            height: 25px;
+        }
+        .cross-cell{
+            width: 25px;
+            padding-left: 5px;
+        }
     </style>
 </head>
 <body class="w3-content" style="max-width:1200px">
@@ -109,6 +116,15 @@
                         <td><p th:text="${product.brand} + ' ' + ${product.model}"></p></td>
                         <td class="size-cell"><p th:text="${product.size}"></p></td>
                         <td class="price-cell"><p th:text="'$' + ${product.price}"></p></td>
+                        <td class="cross-cell">
+                            <form th:action="@{'/remove-from-cart'}" method="post">
+                                <input type="hidden" name="productName" th:value="${product.model}">
+                                <input type="hidden" name="size" th:value="${product.size}">
+                                <button class="xmark-button" type="submit">
+                                    <img class="remove-item-xmark" src="https://clipart-library.com/images_k/x-mark-transparent/x-mark-transparent-24.png" alt="xmark">
+                                </button>
+                            </form>
+                        </td>
                     </tr>
                 </table>
                 <div class="w3-container sum-cell" th:unless="${cartIsEmpty}">Sum: <span th:text = "'$' + ${sumPrice}"></span></div>

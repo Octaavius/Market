@@ -79,7 +79,7 @@
           <div class="size-selection">
             <label for="size">Select size</label>
             <select id="size" name="size" class="w3-button w3-green">
-              <option th:each="size : ${sizes}" th:value="${size}" th:text="${size}"><!--th:attr="(selected)=${size == selected}"--></option>
+              <option th:each="size : ${sizes}" th:value="${size}" th:text="${size}"></option>
             </select>
           </div>
         <p>
