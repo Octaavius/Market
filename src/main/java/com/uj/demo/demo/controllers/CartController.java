@@ -37,7 +37,6 @@ public class CartController {
 
     @PostMapping("/add-to-cart")
     public String addToCart(@RequestParam String productName, @RequestParam String size,  HttpSession session) {
-        size = size.substring(5);
         List<Long> cart = (List<Long>) session.getAttribute("cart");
         if (cart == null) {
             cart = new ArrayList<>();

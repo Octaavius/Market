@@ -73,17 +73,25 @@
     <div class="product-info">
       <h2 th:text="${product.brand} + ' ' + ${product.model}"></h2>
       <p class="price" th:text="${product.price} + ' $'"></p>
-      <form id="add-to-cart-form" th:action="@{'/add-to-cart?productName=' + ${product.model} + '&size=' + ${selected}}" method="post">
+      <form id="add-to-cart-form" th:action="@{'/add-to-cart'}" method="post">
+        <input type="hidden" name="productName" th:value="${product.model}">
+        <p>
         <div class="size-selection">
           <label for="size">Select size</label>
-          <select id="size" name="size">
-            <option th:each="size : ${sizes}" th:value="${size}" th:text="${size}" th:selected="${size == selected}"></option>
+          <select id="size" name="size" class="w3-button w3-green">
+            <option th:each="size : ${sizes}" th:value="${size}" th:text="${size}" th:attr="(selected)=${size == selected}"></option>
           </select>
         </div>
-        <button th:if="${loggedIn}" type="submit">Add to cart</button>
+        </p>
+        <p>
+        <button class="w3-button w3-green" th:if="${loggedIn}" type="submit">Add to cart</button>
+        </p>
       </form>
-      <button th:unless="${loggedIn}" onclick="location.href='/login'">Log in</button>
+      <p>
+        <button class="w3-button w3-green" th:unless="${loggedIn}" onclick="location.href='/login'">Log in</button>
+      </p>
     </div>
+
   </section>
 
   <!-- Subscribe section -->

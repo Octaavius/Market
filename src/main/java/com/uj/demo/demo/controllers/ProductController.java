@@ -30,26 +30,30 @@ public class ProductController {
         return addedProducts;
     }
 
+    @GetMapping("/name")
     @ResponseBody
-    public List<Product> getProductsByName(String name) {
+    public List<Product> getProductsByName(@RequestParam("name") String name) {
         return productService.findByName(name);
     }
 
-    public List<String> getAllSizes(String name){
+    @GetMapping("/sizes")
+    @ResponseBody
+    public List<String> getAllSizes(@RequestParam("name") String name) {
         List<Product> products = getProductsByName(name);
         List<String> sizes = new ArrayList<>();
-        for (Product product : products){
-            if(product.getQuantity() > 0) {
+        for (Product product : products) {
+            if (product.getQuantity() > 0) {
                 sizes.add(product.getSize());
             }
         }
         return sizes;
     }
 
-    @GetMapping("{name}")
+    @GetMapping("/{name}")
     public String product(@PathVariable("name") String name, Model model, HttpSession session) {
-        if(getProductsByName(name).size() > 0) {
-            model.addAttribute("product", getProductsByName(name).get(0));
+        List<Product> products = getProductsByName(name);
+        if (products.size() > 0) {
+            model.addAttribute("product", products.get(0));
             model.addAttribute("sizes", getAllSizes(name).stream().sorted().collect(Collectors.toList()));
         }
         model.addAttribute("loggedIn", session.getAttribute("user") != null);
