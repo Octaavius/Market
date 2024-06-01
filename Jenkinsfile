@@ -15,26 +15,25 @@ pipeline {
 
         stage('Build') {
             steps {
-                // Build the project using Gradle
-                powershell './gradlew build'
+                sh './gradlew build'
             }
         }
 
         stage('Docker Compose Build') {
             steps {
                 script {
-                    powershell 'docker-compose build'
-                    powershell 'docker-compose up -d'
+                    sh 'docker-compose build'
+                    sh 'docker-compose up -d'
                 }
             }
         }
 
-        stage('Docker Compose Pupowershell') {
+        stage('Docker Compose Push') {
             steps {
                 script {
-                    // Pupowershell the Docker images to a Docker registry (optional)
+                    // Push the Docker images to a Docker registry (optional)
                     docker.withRegistry('', 'docker-registry-credentials-id') {
-                        powershell 'docker-compose pupowershell'
+                        sh 'docker-compose push'
                     }
                 }
             }
@@ -45,7 +44,7 @@ pipeline {
         always {
             script {
                 // Clean up: stop and remove containers, networks, images, and volumes
-                powershell 'docker-compose down'
+                sh 'docker-compose down'
             }
             // Clean up workspace
             cleanWs()
