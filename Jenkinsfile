@@ -23,12 +23,8 @@ pipeline {
         stage('Docker Compose Build') {
             steps {
                 script {
-                    // Navigate to the directory containing docker-compose.yml
-                    dir('dockerCompose') {
-                        // Build and bring up the Docker containers defined in docker-compose.yml
-                        sh 'docker-compose build'
-                        sh 'docker-compose up -d'
-                    }
+                    sh 'docker-compose build'
+                    sh 'docker-compose up -d'
                 }
             }
         }
@@ -49,9 +45,7 @@ pipeline {
         always {
             script {
                 // Clean up: stop and remove containers, networks, images, and volumes
-                dir('dockerCompose') {
-                    sh 'docker-compose down'
-                }
+                sh 'docker-compose down'
             }
             // Clean up workspace
             cleanWs()
