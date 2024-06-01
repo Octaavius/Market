@@ -15,15 +15,15 @@ pipeline {
 
         stage('Build') {
             steps {
-                sh './gradlew build'
+                powershell './gradlew build'
             }
         }
 
         stage('Docker Compose Build') {
             steps {
                 script {
-                    sh 'docker-compose build'
-                    sh 'docker-compose up -d'
+                    powershell 'docker-compose build'
+                    powershell 'docker-compose up -d'
                 }
             }
         }
@@ -33,7 +33,7 @@ pipeline {
                 script {
                     // Push the Docker images to a Docker registry (optional)
                     docker.withRegistry('', 'docker-registry-credentials-id') {
-                        sh 'docker-compose push'
+                        powershell 'docker-compose push'
                     }
                 }
             }
@@ -44,7 +44,7 @@ pipeline {
         always {
             script {
                 // Clean up: stop and remove containers, networks, images, and volumes
-                sh 'docker-compose down'
+                powershell 'docker-compose down'
             }
             // Clean up workspace
             cleanWs()
