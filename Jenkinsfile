@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     environment {
-        DOCKER_IMAGE = "your-docker-repo/market:${env.BUILD_ID}"
+        DOCKER_IMAGE_TAG = "${env.BUILD_ID}"
     }
 
     stages {
