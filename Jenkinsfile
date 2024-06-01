@@ -7,34 +7,34 @@ pipeline {
 
     stages {
         stage('Checkout') {
-            steps {
-                // Checkout the code from GitHub
-                git branch: 'main', url: 'https://github.com/Octaavius/Market.git', credentialsId: 'your-credentials-id'
-            }
-        }
+             steps {
+                 // Checkout the code from your version control system
+                 checkout scm
+             }
+         }
 
         stage('Build') {
             steps {
                 // Build the project using Gradle
-                sh './gradlew build'
+                powershell './gradlew build'
             }
         }
 
         stage('Docker Compose Build') {
             steps {
                 script {
-                    sh 'docker-compose build'
-                    sh 'docker-compose up -d'
+                    powershell 'docker-compose build'
+                    powershell 'docker-compose up -d'
                 }
             }
         }
 
-        stage('Docker Compose Push') {
+        stage('Docker Compose Pupowershell') {
             steps {
                 script {
-                    // Push the Docker images to a Docker registry (optional)
+                    // Pupowershell the Docker images to a Docker registry (optional)
                     docker.withRegistry('', 'docker-registry-credentials-id') {
-                        sh 'docker-compose push'
+                        powershell 'docker-compose pupowershell'
                     }
                 }
             }
@@ -45,7 +45,7 @@ pipeline {
         always {
             script {
                 // Clean up: stop and remove containers, networks, images, and volumes
-                sh 'docker-compose down'
+                powershell 'docker-compose down'
             }
             // Clean up workspace
             cleanWs()
