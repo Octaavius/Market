@@ -22,19 +22,7 @@ pipeline {
         stage('Docker Compose Build') {
             steps {
                 script {
-                    powershell 'docker-compose build'
                     powershell 'docker-compose up -d'
-                }
-            }
-        }
-
-        stage('Docker Compose Push') {
-            steps {
-                script {
-                    // Push the Docker images to a Docker registry (optional)
-                    docker.withRegistry('', 'docker-registry-credentials-id') {
-                        powershell 'docker-compose push'
-                    }
                 }
             }
         }
@@ -46,8 +34,6 @@ pipeline {
                 // Clean up: stop and remove containers, networks, images, and volumes
                 powershell 'docker-compose down'
             }
-            // Clean up workspace
-            cleanWs()
         }
         success {
             echo 'Pipeline completed successfully!'
