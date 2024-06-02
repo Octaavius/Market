@@ -22,7 +22,7 @@ pipeline {
         stage('Docker Compose Build') {
             steps {
                 script {
-                    powershell 'docker-compose up -d'
+                    powershell './gradlew deploy'
                 }
             }
         }
