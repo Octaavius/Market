@@ -29,12 +29,6 @@ pipeline {
     }
 
     post {
-        always {
-            script {
-                // Clean up: stop and remove containers, networks, images, and volumes
-                powershell 'docker-compose down'
-            }
-        }
         success {
             echo 'Pipeline completed successfully!'
         }
