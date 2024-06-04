@@ -15,14 +15,14 @@ pipeline {
 
         stage('Build') {
             steps {
-                powershell './gradlew build'
+                sh './gradlew build'
             }
         }
 
         stage('Docker Compose Build') {
             steps {
                 script {
-                    powershell './gradlew deploy'
+                    sh './gradlew deploy'
                 }
             }
         }

@@ -1,15 +1,11 @@
 package com.uj.demo.demo.controllers;
 
 import com.uj.demo.demo.services.CartService;
-import com.uj.demo.demo.services.ProductService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import jakarta.servlet.http.HttpSession;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @Controller
 public class CartController {
