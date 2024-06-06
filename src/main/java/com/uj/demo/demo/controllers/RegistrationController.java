@@ -2,7 +2,6 @@ package com.uj.demo.demo.controllers;
 
 import com.uj.demo.demo.models.User;
 import com.uj.demo.demo.services.UserService;
-import com.uj.demo.demo.controllers.LoginController;
 
 import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
@@ -35,7 +34,6 @@ public class RegistrationController {
         User newUser = userService.saveUser(user);
         if (newUser != null) {
             session.setAttribute("user", newUser);
-            //model.addAttribute("message", "Sign up successful!");
             return "redirect:/";  // Redirect to home page
         } else {
             model.addAttribute("message", "Such username already exists.");
