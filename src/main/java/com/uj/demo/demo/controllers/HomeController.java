@@ -1,5 +1,6 @@
 package com.uj.demo.demo.controllers;
 import com.uj.demo.demo.models.User;
+import com.uj.demo.demo.services.HomeService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
 import com.uj.demo.demo.services.ProductService;
@@ -13,24 +14,16 @@ import java.util.stream.Collectors;
 @Controller
 public class HomeController {
     private final ProductService productService;
+    private final HomeService homeService;
 
-    public HomeController(ProductService productService) {
+    public HomeController(ProductService productService, HomeService homeService) {
         this.productService = productService;
+        this.homeService = homeService;
     }
 
     @GetMapping("/")
     public String index(Model model, HttpSession session) {
-        User user = (User) session.getAttribute("user");
-
-        //boolean loggedIn = (Session.currentSessionId != 0);
-        boolean loggedIn = (user != null);
-        if(loggedIn) {
-            model.addAttribute("greeting", "Hello, " + user.getName() + "!");
-        }
-        model.addAttribute("loggedIn", loggedIn);
-        List<Product> products = productService.findAll().stream().filter(product -> product.getQuantity() > 0).distinct().collect(Collectors.toList());
-        model.addAttribute("products", products);
-        return "index"; // Ensure this matches the name of your Thymeleaf template
+        return homeService.index(model, session, productService);
     }
 
 }
