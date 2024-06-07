@@ -15,7 +15,7 @@ public class CartService {
         this.productService = productService;
     }
 
-    public void addItemToCart(String productName, String size, HttpSession session){
+    public String addItemToCart(String productName, String size, HttpSession session){
         List<Long> cart = (List<Long>) session.getAttribute("cart");
         if (cart == null) {
             cart = new ArrayList<>();
@@ -24,15 +24,17 @@ public class CartService {
         Long productId = productService.getId(productName, size);
         cart.add(productId);
         session.setAttribute("cart", cart);
+        return "redirect:/profile";
     }
 
-    public void removeItemFromCart(String productName, String size, HttpSession session){
+    public String removeItemFromCart(String productName, String size, HttpSession session){
         List<Long> cart = (List<Long>) session.getAttribute("cart");
         if (cart == null) {
-            return;
+            return "profile";
         }
         Long productId = productService.getId(productName, size);
         cart.remove(productId);
         session.setAttribute("cart", cart);
+        return "profile";
     }
 }

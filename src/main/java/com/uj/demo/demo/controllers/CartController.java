@@ -18,13 +18,11 @@ public class CartController {
 
     @PostMapping("/add-to-cart")
     public String addToCart(@RequestParam String productName, @RequestParam String size, HttpSession session) {
-        cartService.addItemToCart(productName, size, session);
-        return "redirect:/profile";
+        return cartService.addItemToCart(productName, size, session);
     }
 
     @PostMapping("/remove-from-cart")
     public String removeFromCart(@RequestParam String productName, @RequestParam String size,  HttpSession session) {
-        cartService.removeItemFromCart(productName, size, session);
-        return "profile";
+        return cartService.removeItemFromCart(productName, size, session);
     }
 }

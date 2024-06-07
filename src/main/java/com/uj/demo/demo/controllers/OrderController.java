@@ -22,8 +22,6 @@ public class OrderController {
         this.orderService = orderService;
         this.productService = productService;
     }
-    @PostMapping
-    public Order addOrder(@RequestBody Order order) { return orderService.saveOrder(order); }
     @GetMapping
     public String order(HttpSession session, Model model) {
         User user = (User) session.getAttribute("user");
