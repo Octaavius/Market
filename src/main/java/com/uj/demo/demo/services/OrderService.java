@@ -1,6 +1,5 @@
 package com.uj.demo.demo.services;
 
-import com.mysql.cj.Session;
 import com.uj.demo.demo.models.Order;
 import com.uj.demo.demo.models.Product;
 import com.uj.demo.demo.models.User;
