@@ -23,11 +23,7 @@ public class ProductController {
     @PostMapping
     @ResponseBody
     public List<Product> addProduct(@RequestBody List<Product> products) {
-        List<Product> addedProducts = new ArrayList<>();
-        for (Product product : products) {
-            addedProducts.add(productService.save(product));
-        }
-        return addedProducts;
+        return productService.addProducts(products);
     }
 
     @GetMapping("/name")
@@ -39,31 +35,17 @@ public class ProductController {
     @GetMapping("/sizes")
     @ResponseBody
     public List<String> getAllSizes(@RequestParam("name") String name) {
-        List<Product> products = getProductsByName(name);
-        List<String> sizes = new ArrayList<>();
-        for (Product product : products) {
-            if (product.getQuantity() > 0) {
-                sizes.add(product.getSize());
-            }
-        }
-        return sizes;
+        return productService.getAllSizes(name);
     }
 
     @GetMapping("/{name}")
     public String product(@PathVariable("name") String name, Model model, HttpSession session) {
-        List<Product> products = getProductsByName(name);
-        if (products.size() > 0) {
-            model.addAttribute("product", products.get(0));
-            model.addAttribute("sizes", getAllSizes(name).stream().sorted().collect(Collectors.toList()));
-        }
-        model.addAttribute("loggedIn", session.getAttribute("user") != null);
-        return "product";
+        return productService.productInfo(name, model, session);
     }
 
     @GetMapping()
     @ResponseBody
     public List<Product> getAllDifferentProducts() {
-        List<Product> newProducts = productService.findAll();
-        return newProducts.stream().distinct().collect(Collectors.toList());
+        return productService.getAllDifferentProducts();
     }
 }

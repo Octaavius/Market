@@ -2,11 +2,16 @@ package com.uj.demo.demo.services;
 
 import com.uj.demo.demo.models.Product;
 import com.uj.demo.demo.repositories.ProductRepository;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Service;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class ProductService {
@@ -23,6 +28,40 @@ public class ProductService {
             }
         }
         return productRepository.save(product);
+    }
+
+    public String productInfo(String name, Model model, HttpSession session) {
+        List<Product> products = findByName(name);
+        if (products.size() > 0) {
+            model.addAttribute("product", products.get(0));
+            model.addAttribute("sizes", getAllSizes(name).stream().sorted().collect(Collectors.toList()));
+        }
+        model.addAttribute("loggedIn", session.getAttribute("user") != null);
+        return "product";
+    }
+
+    public List<Product> getAllDifferentProducts() {
+        List<Product> newProducts = findAll();
+        return newProducts.stream().distinct().collect(Collectors.toList());
+    }
+
+    public List<String> getAllSizes(String name) {
+        List<Product> products = findByName(name);
+        List<String> sizes = new ArrayList<>();
+        for (Product product : products) {
+            if (product.getQuantity() > 0) {
+                sizes.add(product.getSize());
+            }
+        }
+        return sizes;
+    }
+
+    public List<Product> addProducts(List<Product> products){
+        List<Product> addedProducts = new ArrayList<>();
+        for (Product product : products) {
+            addedProducts.add(save(product));
+        }
+        return addedProducts;
     }
 
     public List<Product> findByName(String name) {
