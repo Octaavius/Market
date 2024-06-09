@@ -1,4 +1,4 @@
-package services;
+package com.uj.demo.demo.services;
 
 import static org.mockito.Mockito.*;
 import static org.junit.jupiter.api.Assertions.*;
@@ -65,6 +65,22 @@ public class ProductServiceTest {
 
         assertNull(savedProduct);
         verify(productRepository, never()).save(product);
+    }
+
+    @Test
+    public void getExistId(){
+        Product product = new Product(1L, ProductType.SHOES, "Nike", "AirMax", "Black", Sex.UNISEX, "10", 5, 100.0);
+        when(productRepository.findByModel("AirMax")).thenReturn(Arrays.asList(product));
+        Long productId = productService.getId(product.getModel(), product.getSize());
+        assertEquals(productId, product.getId());
+    }
+
+    @Test
+    public void getUnExistId(){
+        Product product = new Product(1L, ProductType.SHOES, "Nike", "AirMax", "Black", Sex.UNISEX, "10", 5, 100.0);
+        when(productRepository.findByModel("AirMax")).thenReturn(Arrays.asList(product));
+        Long productId = productService.getId(product.getModel(), "1");
+        assertEquals(productId, -1);
     }
 
     @Test
