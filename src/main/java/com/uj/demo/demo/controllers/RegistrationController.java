@@ -1,7 +1,6 @@
 package com.uj.demo.demo.controllers;
 
 import com.uj.demo.demo.models.User;
-import com.uj.demo.demo.services.LoginService;
 import com.uj.demo.demo.services.RegistrationService;
 import com.uj.demo.demo.services.UserService;
 
@@ -29,14 +28,12 @@ public class RegistrationController {
 
     @GetMapping
     public String signup(Model model) {
-        logger.info("Loading sign up page");
         return registrationService.loadSignUpPage(model);
     }
 
     @PostMapping
-    public String signup(@ModelAttribute("user") User user, Model model, HttpSession session) throws NoSuchAlgorithmException {
-        logger.info("Adding new user with username: {}", user.getLogin());
-        return registrationService.addNewUser(user, model, session, userService);
+    public String signup(@ModelAttribute("user") User user, HttpSession session) throws NoSuchAlgorithmException {
+        return registrationService.addNewUser(user, session, userService);
     }
 }
 

@@ -1,7 +1,10 @@
 package com.uj.demo.demo.services;
 
+import com.uj.demo.demo.exceptions.WrongLoginOrPasswordException;
 import com.uj.demo.demo.models.User;
 import jakarta.servlet.http.HttpSession;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 
@@ -13,25 +16,31 @@ import java.security.NoSuchAlgorithmException;
 public class LoginService {
     private final String SALT = "salt";
 
-    public String loadLoginPage(Model model){
+    private static final Logger logger = LogManager.getLogger(LoginService.class);
+
+    public String loadLoginPage(Model model) {
         model.addAttribute("user", new User());
         return "login";
     }
 
-    public String authorizeUser(User user, Model model, HttpSession session, UserService userService) throws NoSuchAlgorithmException {
+    public String authorizeUser(User user, HttpSession session, UserService userService) throws NoSuchAlgorithmException {
+        logger.info("Processing login request...");
+        logger.debug("Getting entered user info...");
         String password = user.getPassword();
         user.setPassword(getMd5(getSHA(password) + SALT));
+        logger.debug("Finding such user in database");
         User userFromDb = userService.findUser(user);
         if (userFromDb != null) {
+            logger.info("User found in database. Authorizing user");
             session.setAttribute("user", userFromDb);
-            return "redirect:/";  // Redirect to home page
+            return "redirect:/";
         } else {
-            model.addAttribute("message", "Invalid username or password.");
-            return "login";  // Stay on the login page
+            throw new WrongLoginOrPasswordException("No such user found");
         }
     }
 
-    public String unauthorizeUser(HttpSession session){
+    public String unauthorizeUser(HttpSession session) {
+        logger.debug("Unauthorizing user");
         session.invalidate();
         return "redirect:/";
     }
@@ -51,8 +60,7 @@ public class LoginService {
     public static String toHexString(byte[] hash) {
         BigInteger number = new BigInteger(1, hash);
         StringBuilder hexString = new StringBuilder(number.toString(16));
-        while (hexString.length() < 32)
-        {
+        while (hexString.length() < 32) {
             hexString.insert(0, '0');
         }
         return hexString.toString();

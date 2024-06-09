@@ -21,6 +21,7 @@ public class OrderController {
         this.orderService = orderService;
         this.productService = productService;
     }
+
     @GetMapping
     public String order(HttpSession session, Model model) {
         logger.info("Creating order");

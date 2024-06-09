@@ -1,4 +1,5 @@
 package com.uj.demo.demo.controllers;
+
 import com.uj.demo.demo.services.ProductService;
 import com.uj.demo.demo.services.ProfileService;
 import jakarta.servlet.http.HttpSession;
@@ -21,8 +22,7 @@ public class ProfileController {
     }
 
     @GetMapping("/profile")
-    public String profile(Model model, HttpSession session){
-        logger.info("Loading profile");
+    public String profile(Model model, HttpSession session) {
         return profileService.showProfile(model, session, productService);
     }
 }

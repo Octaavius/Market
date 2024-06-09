@@ -31,9 +31,8 @@ public class LoginController {
     }
 
     @PostMapping("/login")
-    public String login(@ModelAttribute("user") User user, Model model, HttpSession session) throws NoSuchAlgorithmException {
-        logger.info("Processing login request");
-        return loginService.authorizeUser(user, model, session, userService);
+    public String login(@ModelAttribute("user") User user, HttpSession session) throws NoSuchAlgorithmException {
+        return loginService.authorizeUser(user, session, userService);
     }
 
     @GetMapping("logout")

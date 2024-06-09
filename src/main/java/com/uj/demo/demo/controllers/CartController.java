@@ -20,13 +20,11 @@ public class CartController {
 
     @PostMapping("/add-to-cart")
     public String addToCart(@RequestParam String productName, @RequestParam String size, HttpSession session) {
-        logger.info("Received request to add product to cart");
         return cartService.addItemToCart(productName, size, session);
     }
 
     @PostMapping("/remove-from-cart")
-    public String removeFromCart(@RequestParam String productName, @RequestParam String size,  HttpSession session) {
-        logger.info("Received request to remove product from cart");
+    public String removeFromCart(@RequestParam String productName, @RequestParam String size, HttpSession session) {
         return cartService.removeItemFromCart(productName, size, session);
     }
 }

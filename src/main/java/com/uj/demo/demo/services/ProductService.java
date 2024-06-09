@@ -5,47 +5,60 @@ import com.uj.demo.demo.repositories.ProductRepository;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import org.apache.logging.log4j.*;
+
 @Service
 public class ProductService {
     private final ProductRepository productRepository;
+
     public ProductService(ProductRepository productRepository) {
         this.productRepository = productRepository;
     }
 
+    private static final Logger logger = LogManager.getLogger(ProductService.class);
+
     public Product save(Product product) {
+        logger.debug("Saving product {}", product.toString());
         List<Product> existingProducts = productRepository.findByModel(product.getModel());
-        for (Product exProduct : existingProducts){
+        for (Product exProduct : existingProducts) {
             if (exProduct.getSize().equals(product.getSize())) {
+                logger.warn("Trying to save product {} with already saved size. Ignoring save", product.toString());
+                //if the product is the same as in the db, just add quantity
                 return null;
             }
         }
+        logger.debug("Successfully saved product {}", product.toString());
         return productRepository.save(product);
     }
 
     public String productInfo(String name, Model model, HttpSession session) {
+        logger.debug("Getting product info for {}", name);
         List<Product> products = findByName(name);
         if (products.size() > 0) {
+            logger.debug("Found {} products", products.size());
             model.addAttribute("product", products.get(0));
             model.addAttribute("sizes", getAllSizes(name).stream().sorted().collect(Collectors.toList()));
+        } else {
+            logger.warn("No product found for name {}", name);
         }
         model.addAttribute("loggedIn", session.getAttribute("user") != null);
         return "product";
     }
 
     public List<Product> getAllDifferentProducts() {
+        logger.debug("Getting all different products");
         List<Product> newProducts = findAll();
         return newProducts.stream().distinct().collect(Collectors.toList());
     }
 
     public List<String> getAllSizes(String name) {
+        logger.debug("Getting all different sizes for {}", name);
         List<Product> products = findByName(name);
         List<String> sizes = new ArrayList<>();
         for (Product product : products) {
@@ -56,7 +69,8 @@ public class ProductService {
         return sizes;
     }
 
-    public List<Product> addProducts(List<Product> products){
+    public List<Product> addProducts(List<Product> products) {
+        logger.debug("Adding products to database: {}", products.toString());
         List<Product> addedProducts = new ArrayList<>();
         for (Product product : products) {
             addedProducts.add(save(product));
@@ -65,27 +79,34 @@ public class ProductService {
     }
 
     public List<Product> findByName(String name) {
+        logger.debug("Finding product by name {}", name);
         return productRepository.findByModel(name);
     }
 
-    public Long getId(String model, String size){
+    public Long getId(String model, String size) {
+        logger.debug("Getting product id for {}", model);
         List<Product> products = findByName(model);
-        for(Product product: products){
-            if(product.getSize().equals(size)){
+        for (Product product : products) {
+            if (product.getSize().equals(size)) {
                 return product.getId();
             }
         }
         return (long) -1;
     }
 
-    public List<Product> findAll() { return productRepository.findAll(); }
+    public List<Product> findAll() {
+        logger.debug("Finding all products");
+        return productRepository.findAll();
+    }
 
 
     public Product findProductById(Long productId) {
+        logger.debug("Finding product by id {}", productId);
         return productRepository.findById(productId).orElse(null);
     }
 
     public Product updateProduct(Long productId, Product updatedProductDetails) {
+        logger.debug("Updating product with id {}", productId);
         Optional<Product> optionalProduct = productRepository.findById(productId);
 
         if (optionalProduct.isPresent()) {

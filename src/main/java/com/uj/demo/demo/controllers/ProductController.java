@@ -32,27 +32,23 @@ public class ProductController {
     @GetMapping("/name")
     @ResponseBody
     public List<Product> getProductsByName(@RequestParam("name") String name) {
-        logger.info("Looking for products by name: {}", name);
         return productService.findByName(name);
     }
 
     @GetMapping("/sizes")
     @ResponseBody
     public List<String> getAllSizes(@RequestParam("name") String name) {
-        logger.info("Checking availability of sizes of products by name: {}", name);
         return productService.getAllSizes(name);
     }
 
     @GetMapping("/{name}")
     public String product(@PathVariable("name") String name, Model model, HttpSession session) {
-        logger.info("Loading product page by name: {}", name);
         return productService.productInfo(name, model, session);
     }
 
     @GetMapping()
     @ResponseBody
     public List<Product> getAllDifferentProducts() {
-        logger.info("Looking for all products");
         return productService.getAllDifferentProducts();
     }
 }

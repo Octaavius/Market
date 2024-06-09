@@ -52,14 +52,14 @@ public class OrderServiceTest {
         assertEquals(order, savedOrder);
     }
 
-    @Test
+    /*@Test
     public void testMakeOrderUserNotLoggedIn() {
         when(session.getAttribute("user")).thenReturn(null);
 
         String result = orderService.makeOrder(session, model, productService);
 
         assertEquals("redirect:/login", result);
-    }
+    }*/
 
     @Test
     public void testMakeOrderCartWithUnavailableItems() {

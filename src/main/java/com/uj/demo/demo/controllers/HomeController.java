@@ -1,4 +1,5 @@
 package com.uj.demo.demo.controllers;
+
 import com.uj.demo.demo.services.HomeService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
@@ -21,7 +22,6 @@ public class HomeController {
 
     @GetMapping("/")
     public String index(Model model, HttpSession session) {
-        logger.info("Loading index page");
         return homeService.index(model, session, productService);
     }
 
