@@ -6,11 +6,14 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
+import org.apache.logging.log4j.*;
+
 @Controller
 public class ProfileController {
-
     private final ProductService productService;
     private final ProfileService profileService;
+
+    private static final Logger logger = LogManager.getLogger(ProfileController.class);
 
     public ProfileController(ProductService productService, ProfileService profileService) {
         this.productService = productService;
@@ -19,6 +22,7 @@ public class ProfileController {
 
     @GetMapping("/profile")
     public String profile(Model model, HttpSession session){
+        logger.info("Loading profile");
         return profileService.showProfile(model, session, productService);
     }
 }

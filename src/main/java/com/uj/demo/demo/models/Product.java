@@ -133,6 +133,21 @@ public class Product {
         this.quantity -= amount;
     }
 
+    @Override
+    public String toString() {
+        return "Product{" +
+                "id=" + id +
+                ", type=" + type +
+                ", brand='" + brand + '\'' +
+                ", model='" + model + '\'' +
+                ", color='" + color + '\'' +
+                ", sex=" + sex +
+                ", size='" + size + '\'' +
+                ", quantity=" + quantity +
+                ", price=" + price +
+                '}';
+    }
+
     public void setSize(String size) {
         this.size = size;
     }
