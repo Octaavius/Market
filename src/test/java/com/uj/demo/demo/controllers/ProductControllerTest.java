@@ -1,106 +1,98 @@
 package com.uj.demo.demo.controllers;
 
 import com.uj.demo.demo.models.Product;
-import com.uj.demo.demo.models.ProductType;
-import com.uj.demo.demo.models.Sex;
 import com.uj.demo.demo.services.ProductService;
+import jakarta.servlet.http.HttpSession;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
+import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+import org.springframework.ui.Model;
 
 import java.util.Arrays;
+import java.util.List;
 
-import static org.hamcrest.Matchers.*;
 import static org.mockito.Mockito.*;
-import static org.springframework.http.MediaType.APPLICATION_JSON;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@SpringBootTest
-@AutoConfigureMockMvc
-class ProductControllerTest {
+public class ProductControllerTest {
 
-    @Autowired
-    private MockMvc mockMvc;
-
-    @MockBean
+    @Mock
     private ProductService productService;
 
-//    @Test
-//    void addProduct() throws Exception {
-//        Product product1 = new Product(1L, ProductType.SHOES, "Nike", "AirMax", "Black", Sex.UNISEX, "10", 5, 100.0);
-//        Product product2 = new Product(2L, ProductType.SHOES, "Adidas", "Superstar", "White", Sex.UNISEX, "9", 10, 80.0);
-//
-//        when(productService.save(product1)).thenReturn(product1);
-//        when(productService.save(product2)).thenReturn(product2);
-//
-//        String payload = "[{\"id\":1,\"type\":\"SHOES\",\"brand\":\"Nike\",\"model\":\"AirMax\",\"color\":\"Black\",\"sex\":\"UNISEX\",\"size\":\"10\",\"quantity\":5,\"price\":100.0}," +
-//                "{\"id\":2,\"type\":\"SHOES\",\"brand\":\"Adidas\",\"model\":\"Superstar\",\"color\":\"White\",\"sex\":\"UNISEX\",\"size\":\"9\",\"quantity\":10,\"price\":80.0}]";
-//
-//        mockMvc.perform(post("/products")
-//                        .contentType(APPLICATION_JSON)
-//                        .content(payload))
-//                .andExpect(status().isOk())
-//                .andExpect(jsonPath("$", hasSize(2)))
-//                .andExpect(jsonPath("$[0].brand", is("Nike")))
-//                .andExpect(jsonPath("$[0].model", is("AirMax")))
-//                .andExpect(jsonPath("$[0].color", is("Black")))
-//                .andExpect(jsonPath("$[0].sex", is("UNISEX")))
-//                .andExpect(jsonPath("$[0].size", is("10")))
-//                .andExpect(jsonPath("$[0].quantity", is(5)))
-//                .andExpect(jsonPath("$[0].price", is(100.0)))
-//                .andExpect(jsonPath("$[1].brand", is("Adidas")))
-//                .andExpect(jsonPath("$[1].model", is("Superstar")))
-//                .andExpect(jsonPath("$[1].color", is("White")))
-//                .andExpect(jsonPath("$[1].sex", is("UNISEX")))
-//                .andExpect(jsonPath("$[1].size", is("9")))
-//                .andExpect(jsonPath("$[1].quantity", is(10)))
-//                .andExpect(jsonPath("$[1].price", is(80.0)));
-//    }
-//
-//    @Test
-//    void getAllDifferentProducts() throws Exception {
-//        Product product1 = new Product(1L, ProductType.SHOES, "Nike", "AirMax", "Black", Sex.UNISEX, "10", 5, 100.0);
-//        Product product2 = new Product(2L, ProductType.SHOES, "Adidas", "Superstar", "White", Sex.UNISEX, "9", 10, 80.0);
-//
-//        when(productService.findAll()).thenReturn(Arrays.asList(product1, product2));
-//
-//        mockMvc.perform(get("/products"))
-//                .andExpect(status().isOk())
-//                .andExpect(jsonPath("$", hasSize(2)))
-//                .andExpect(jsonPath("$[0].brand", is("Nike")))
-//                .andExpect(jsonPath("$[0].model", is("AirMax")))
-//                .andExpect(jsonPath("$[0].color", is("Black")))
-//                .andExpect(jsonPath("$[0].sex", is("UNISEX")))
-//                .andExpect(jsonPath("$[0].size", is("10")))
-//                .andExpect(jsonPath("$[0].quantity", is(5)))
-//                .andExpect(jsonPath("$[0].price", is(100.0)))
-//                .andExpect(jsonPath("$[1].brand", is("Adidas")))
-//                .andExpect(jsonPath("$[1].model", is("Superstar")))
-//                .andExpect(jsonPath("$[1].color", is("White")))
-//                .andExpect(jsonPath("$[1].sex", is("UNISEX")))
-//                .andExpect(jsonPath("$[1].size", is("9")))
-//                .andExpect(jsonPath("$[1].quantity", is(10)))
-//                .andExpect(jsonPath("$[1].price", is(80.0)));
-//    }
-//
-//    @Test
-//    void getOneProduct() throws Exception {
-//        Product product1 = new Product(1L, ProductType.SHOES, "Nike", "AirMax", "Black", Sex.UNISEX, "10", 5, 100.0);
-//        Product product2 = new Product(2L, ProductType.SHOES, "Nike", "AirMax", "Black", Sex.UNISEX, "11", 5, 100.0);
-//
-//        when(productService.findByName("Nike AirMax")).thenReturn(Arrays.asList(product1, product2));
-//
-//        mockMvc.perform(get("/products/Nike AirMax"))
-//                .andExpect(status().isOk())
-//                .andExpect(model().attributeExists("product"))
-//                .andExpect(model().attributeExists("sizes"))
-//                .andExpect(model().attribute("product", is(product1)))
-//                .andExpect(model().attribute("sizes", containsInAnyOrder("10", "11")))
-//                .andExpect(view().name("product"));
-//    }
+    @Mock
+    private HttpSession session;
+
+    @Mock
+    private Model model;
+
+    @InjectMocks
+    private ProductController productController;
+
+    private MockMvc mockMvc;
+
+    @BeforeEach
+    public void setUp() {
+        MockitoAnnotations.openMocks(this);
+        mockMvc = MockMvcBuilders.standaloneSetup(productController).build();
+    }
+
+    @Test
+    public void testAddProduct() throws Exception {
+        List<Product> products = Arrays.asList(new Product(1L, null, "Brand1", "Model1", "Color1", null, "Size1", 1, 100.0));
+        when(productService.addProducts(products)).thenReturn(products);
+
+        mockMvc.perform(post("/products")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("[{\"id\":1,\"brand\":\"Brand1\",\"model\":\"Model1\",\"color\":\"Color1\",\"size\":\"Size1\",\"quantity\":1,\"price\":100.0}]"))
+                .andExpect(status().isOk())
+                .andExpect(content().json("[{\"id\":1,\"brand\":\"Brand1\",\"model\":\"Model1\",\"color\":\"Color1\",\"size\":\"Size1\",\"quantity\":1,\"price\":100.0}]"));
+
+        verify(productService, times(1)).addProducts(products);
+    }
+
+    @Test
+    public void testGetProductsByName() throws Exception {
+        List<Product> products = Arrays.asList(new Product(1L, null, "Brand1", "Model1", "Color1", null, "Size1", 1, 100.0));
+        when(productService.findByName("Model1")).thenReturn(products);
+
+        mockMvc.perform(get("/products/name")
+                        .param("name", "Model1"))
+                .andExpect(status().isOk())
+                .andExpect(content().json("[{\"id\":1,\"brand\":\"Brand1\",\"model\":\"Model1\",\"color\":\"Color1\",\"size\":\"Size1\",\"quantity\":1,\"price\":100.0}]"));
+
+        verify(productService, times(1)).findByName("Model1");
+    }
+
+    @Test
+    public void testGetAllSizes() throws Exception {
+        List<String> sizes = Arrays.asList("Size1", "Size2");
+        when(productService.getAllSizes("Model1")).thenReturn(sizes);
+
+        mockMvc.perform(get("/products/sizes")
+                        .param("name", "Model1"))
+                .andExpect(status().isOk())
+                .andExpect(content().json("[\"Size1\",\"Size2\"]"));
+
+        verify(productService, times(1)).getAllSizes("Model1");
+    }
+
+    @Test
+    public void testGetAllDifferentProducts() throws Exception {
+        List<Product> products = Arrays.asList(new Product(1L, null, "Brand1", "Model1", "Color1", null, "Size1", 1, 100.0));
+        when(productService.getAllDifferentProducts()).thenReturn(products);
+
+        mockMvc.perform(get("/products"))
+                .andExpect(status().isOk())
+                .andExpect(content().json("[{\"id\":1,\"brand\":\"Brand1\",\"model\":\"Model1\",\"color\":\"Color1\",\"size\":\"Size1\",\"quantity\":1,\"price\":100.0}]"));
+
+        verify(productService, times(1)).getAllDifferentProducts();
+    }
 }
