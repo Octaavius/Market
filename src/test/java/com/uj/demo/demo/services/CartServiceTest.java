@@ -1,10 +1,12 @@
 package com.uj.demo.demo.services;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import com.uj.demo.demo.exceptions.UserNotExistsException;
 import com.uj.demo.demo.services.CartService;
 import com.uj.demo.demo.services.ProductService;
 import org.junit.jupiter.api.BeforeEach;
@@ -30,8 +32,8 @@ public class CartServiceTest {
         MockitoAnnotations.openMocks(this);
     }
 
-    /*@Test
-    public void testAddItemToCart() {
+    @Test
+    public void testAddItemToCartWithUser() throws UserNotExistsException {
         String productName = "TestProduct";
         String size = "M";
         Long productId = 1L;
@@ -39,6 +41,7 @@ public class CartServiceTest {
         MockHttpSession session = new MockHttpSession();
         List<Long> cart = new ArrayList<>();
         session.setAttribute("cart", cart);
+        session.setAttribute("user", new Object());
 
         when(productService.getId(productName, size)).thenReturn(productId);
 
@@ -48,9 +51,25 @@ public class CartServiceTest {
         assertEquals("redirect:/profile", result);
         assertEquals(1, cart.size());
         assertEquals(productId, cart.get(0));
-    }*/
+    }
 
-    /*@Test
+    @Test
+    public void testAddItemToCartWithoutUser() throws UserNotExistsException {
+        String productName = "TestProduct";
+        String size = "M";
+        Long productId = 1L;
+
+        MockHttpSession session = new MockHttpSession();
+
+        when(productService.getId(productName, size)).thenReturn(productId);
+
+        assertThrows(UserNotExistsException.class, () -> {
+                    cartService.addItemToCart(productName, size, session);
+                }
+        );
+    }
+
+    @Test
     public void testRemoveItemFromCart() {
         String productName = "TestProduct";
         String size = "M";
@@ -60,6 +79,7 @@ public class CartServiceTest {
         List<Long> cart = new ArrayList<>();
         cart.add(productId);
         session.setAttribute("cart", cart);
+        session.setAttribute("user", new Object());
 
         when(productService.getId(productName, size)).thenReturn(productId);
 
@@ -68,5 +88,5 @@ public class CartServiceTest {
         verify(productService).getId(productName, size);
         assertEquals("profile", result);
         assertEquals(0, cart.size());
-    }*/
+    }
 }
