@@ -31,6 +31,7 @@ public class UserService {
         logger.debug("Saving user {}", user.getLogin());
         User exsistingUser = userRepository.findByLogin(user.getLogin());
         if (exsistingUser != null) {
+            logger.warn("User {} already exists", user.getLogin());
             return null;
         }
         return userRepository.save(user);

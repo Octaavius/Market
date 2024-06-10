@@ -7,6 +7,7 @@ import com.uj.demo.demo.services.ProductService;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.apache.logging.log4j.*;
+import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 public class HomeController {

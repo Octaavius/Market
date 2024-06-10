@@ -1,5 +1,6 @@
 package com.uj.demo.demo.controllers;
 
+import com.uj.demo.demo.exceptions.UserNotExistsException;
 import com.uj.demo.demo.services.CartService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -20,11 +21,19 @@ public class CartController {
 
     @PostMapping("/add-to-cart")
     public String addToCart(@RequestParam String productName, @RequestParam String size, HttpSession session) {
-        return cartService.addItemToCart(productName, size, session);
+        try {
+            return cartService.addItemToCart(productName, size, session);
+        } catch (UserNotExistsException e) {
+            throw e;
+        }
     }
 
     @PostMapping("/remove-from-cart")
     public String removeFromCart(@RequestParam String productName, @RequestParam String size, HttpSession session) {
-        return cartService.removeItemFromCart(productName, size, session);
+        try {
+            return cartService.removeItemFromCart(productName, size, session);
+        } catch (UserNotExistsException e) {
+            throw e;
+        }
     }
 }

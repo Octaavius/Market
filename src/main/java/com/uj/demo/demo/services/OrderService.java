@@ -30,6 +30,7 @@ public class OrderService {
     }
 
     public String makeOrder(HttpSession session, Model model, ProductService productService) {
+        logger.info("Creating new order");
         logger.debug("Checking if user exists");
         User user = (User) session.getAttribute("user");
         if (user == null) {
@@ -62,7 +63,7 @@ public class OrderService {
             productService.updateProduct(product.getId(), product);
         }
 
-        logger.debug("Saving order");
+        logger.info("Saving order");
 
         Order order = new Order(user);
         order.setProducts(productsInCart);

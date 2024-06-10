@@ -38,6 +38,7 @@ public class ProductService {
     }
 
     public String productInfo(String name, Model model, HttpSession session) {
+        logger.info("Loading {} page", name);
         logger.debug("Getting product info for {}", name);
         List<Product> products = findByName(name);
         if (products.size() > 0) {

@@ -25,7 +25,6 @@ public class ProductController {
     @PostMapping
     @ResponseBody
     public List<Product> addProduct(@RequestBody List<Product> products) {
-        logger.info("Adding products to user's cart: {}", products.toString());
         return productService.addProducts(products);
     }
 

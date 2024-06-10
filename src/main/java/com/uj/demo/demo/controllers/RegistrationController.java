@@ -1,5 +1,8 @@
 package com.uj.demo.demo.controllers;
 
+import com.uj.demo.demo.exceptions.UserAlreadyExistsException;
+import com.uj.demo.demo.exceptions.WrongLoginOrPasswordException;
+import com.uj.demo.demo.exceptions.WrongPasswordFormatException;
 import com.uj.demo.demo.models.User;
 import com.uj.demo.demo.services.RegistrationService;
 import com.uj.demo.demo.services.UserService;
@@ -33,7 +36,11 @@ public class RegistrationController {
 
     @PostMapping
     public String signup(@ModelAttribute("user") User user, HttpSession session) throws NoSuchAlgorithmException {
-        return registrationService.addNewUser(user, session, userService);
+        try {
+            return registrationService.addNewUser(user, session, userService);
+        } catch (UserAlreadyExistsException | WrongPasswordFormatException e) {
+            throw e;
+        }
     }
 }
 

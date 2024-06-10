@@ -1,5 +1,6 @@
 package com.uj.demo.demo.controllers;
 
+import com.uj.demo.demo.exceptions.UserNotExistsException;
 import com.uj.demo.demo.services.OrderService;
 import com.uj.demo.demo.services.ProductService;
 import jakarta.servlet.http.HttpSession;
@@ -24,8 +25,11 @@ public class OrderController {
 
     @GetMapping
     public String order(HttpSession session, Model model) {
-        logger.info("Creating order");
-        return orderService.makeOrder(session, model, productService);
+        try {
+            return orderService.makeOrder(session, model, productService);
+        } catch (UserNotExistsException e) {
+            throw e;
+        }
     }
 }
 

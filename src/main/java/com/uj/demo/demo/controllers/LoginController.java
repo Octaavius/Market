@@ -1,5 +1,7 @@
 package com.uj.demo.demo.controllers;
 
+import com.uj.demo.demo.exceptions.UserNotExistsException;
+import com.uj.demo.demo.exceptions.WrongLoginOrPasswordException;
 import com.uj.demo.demo.models.User;
 import com.uj.demo.demo.services.LoginService;
 import com.uj.demo.demo.services.UserService;
@@ -11,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import java.security.NoSuchAlgorithmException;
 
 import org.apache.logging.log4j.*;
+import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 public class LoginController {
@@ -26,18 +29,28 @@ public class LoginController {
 
     @GetMapping("/login")
     public String login(Model model) {
-        logger.info("Loading login page");
         return loginService.loadLoginPage(model);
     }
 
     @PostMapping("/login")
     public String login(@ModelAttribute("user") User user, HttpSession session) throws NoSuchAlgorithmException {
-        return loginService.authorizeUser(user, session, userService);
+        try {
+            return loginService.authorizeUser(user, session, userService);
+        } catch (WrongLoginOrPasswordException e) {
+            throw e;
+        }
     }
+
+    /*@ExceptionHandler(WrongLoginOrPasswordException.class)
+    public String handleWrongLoginOrPasswordException(WrongLoginOrPasswordException ex, Model model) {
+        logger.error("Wrong login or password exception occurred", ex);
+        model.addAttribute("user", new User());
+        model.addAttribute("message", "Invalid username or password.");
+        return "login";
+    }*/
 
     @GetMapping("logout")
     public String logout(HttpSession session) {
-        logger.info("Processing logout request");
         return loginService.unauthorizeUser(session);
     }
 

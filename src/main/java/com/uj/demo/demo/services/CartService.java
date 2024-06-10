@@ -32,7 +32,7 @@ public class CartService {
             cart = new ArrayList<>();
             session.setAttribute("cart", cart);
         }
-        logger.debug("Adding product to cart");
+        logger.info("Adding product to cart");
         Long productId = productService.getId(productName, size);
         cart.add(productId);
         session.setAttribute("cart", cart);
@@ -51,7 +51,7 @@ public class CartService {
             return "profile";
         }
         Long productId = productService.getId(productName, size);
-        logger.debug("Removing product from cart");
+        logger.info("Removing product from cart");
         boolean removed = cart.remove(productId);
         if (!removed) {
             logger.warn("No such item in the cart");
