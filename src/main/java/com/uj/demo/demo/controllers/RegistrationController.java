@@ -1,20 +1,17 @@
 package com.uj.demo.demo.controllers;
 
-import com.uj.demo.demo.exceptions.UserAlreadyExistsException;
-import com.uj.demo.demo.exceptions.WrongLoginOrPasswordException;
-import com.uj.demo.demo.exceptions.WrongPasswordFormatException;
 import com.uj.demo.demo.models.User;
 import com.uj.demo.demo.services.RegistrationService;
 import com.uj.demo.demo.services.UserService;
-
 import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.security.NoSuchAlgorithmException;
-
-import org.apache.logging.log4j.*;
 
 @Controller
 @RequestMapping("signup")
@@ -22,7 +19,6 @@ public class RegistrationController {
     private final UserService userService;
     private final RegistrationService registrationService;
 
-    private static final Logger logger = LogManager.getLogger(RegistrationController.class);
 
     public RegistrationController(UserService userService, RegistrationService registrationService) {
         this.userService = userService;
@@ -36,11 +32,7 @@ public class RegistrationController {
 
     @PostMapping
     public String signup(@ModelAttribute("user") User user, HttpSession session) throws NoSuchAlgorithmException {
-        try {
-            return registrationService.addNewUser(user, session, userService);
-        } catch (UserAlreadyExistsException | WrongPasswordFormatException e) {
-            throw e;
-        }
+        return registrationService.addNewUser(user, session, userService);
     }
 }
 

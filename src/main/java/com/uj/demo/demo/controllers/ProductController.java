@@ -9,14 +9,11 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-import org.apache.logging.log4j.*;
-
 @Controller
 @RequestMapping("/products")
 public class ProductController {
     private final ProductService productService;
 
-    private static final Logger logger = LogManager.getLogger(ProductController.class);
 
     public ProductController(ProductService productService) {
         this.productService = productService;
