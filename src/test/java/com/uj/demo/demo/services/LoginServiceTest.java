@@ -1,5 +1,6 @@
 package com.uj.demo.demo.services;
 
+import com.uj.demo.demo.exceptions.WrongLoginOrPasswordException;
 import com.uj.demo.demo.models.User;
 import jakarta.servlet.http.HttpSession;
 import org.junit.jupiter.api.BeforeEach;
@@ -12,6 +13,7 @@ import org.springframework.ui.Model;
 import java.security.NoSuchAlgorithmException;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
@@ -47,16 +49,13 @@ public class LoginServiceTest {
         verify(model, never()).addAttribute(eq("message"), anyString());
     }
 
-    /*@Test
+    @Test
     public void testAuthorizeUser_InvalidUser() throws NoSuchAlgorithmException {
         User user = new User();
         user.setPassword("password");
         when(userService.findUser(any(User.class))).thenReturn(null);
-        String viewName = loginService.authorizeUser(user, session, userService);
-        assertEquals("login", viewName);
-        verify(session, never()).setAttribute(eq("user"), any());
-        verify(model).addAttribute("message", "Invalid username or password.");
-    }*/
+        assertThrows(WrongLoginOrPasswordException.class, () -> { loginService.authorizeUser(user, session, userService); });
+    }
 
     @Test
     public void testUnauthorizeUser() {

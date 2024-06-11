@@ -1,5 +1,6 @@
 package com.uj.demo.demo.services;
 
+import com.uj.demo.demo.exceptions.UserAlreadyExistsException;
 import com.uj.demo.demo.models.User;
 import jakarta.servlet.http.HttpSession;
 import org.junit.jupiter.api.BeforeEach;
@@ -12,6 +13,7 @@ import org.springframework.ui.Model;
 import java.security.NoSuchAlgorithmException;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
@@ -48,17 +50,15 @@ public class RegistrationServiceTest {
         verify(model, never()).addAttribute(eq("message"), anyString());
     }
 
-    /*@Test
+    @Test
     public void testAddNewUser_UserExists() throws NoSuchAlgorithmException {
         User user = new User();
         user.setPassword("password");
 
         when(userService.saveUser(any(User.class))).thenReturn(null);
+        assertThrows(UserAlreadyExistsException.class, () -> {
+            registrationService.addNewUser(user, session, userService);
+        });
 
-        String viewName = registrationService.addNewUser(user, session, userService);
-
-        assertEquals("signup", viewName);
-        verify(session, never()).setAttribute(eq("user"), any());
-        verify(model).addAttribute("message", "Such username already exists.");
-    }*/
+    }
 }

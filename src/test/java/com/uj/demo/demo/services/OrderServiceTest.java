@@ -1,8 +1,10 @@
 package com.uj.demo.demo.services;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import com.uj.demo.demo.exceptions.UserNotExistsException;
 import com.uj.demo.demo.models.*;
 import com.uj.demo.demo.repositories.OrderRepository;
 import com.uj.demo.demo.services.OrderService;
@@ -52,14 +54,14 @@ public class OrderServiceTest {
         assertEquals(order, savedOrder);
     }
 
-    /*@Test
+    @Test
     public void testMakeOrderUserNotLoggedIn() {
         when(session.getAttribute("user")).thenReturn(null);
 
-        String result = orderService.makeOrder(session, model, productService);
-
-        assertEquals("redirect:/login", result);
-    }*/
+        assertThrows(UserNotExistsException.class, () -> {
+            orderService.makeOrder(session, model, productService);
+        } );
+    }
 
     @Test
     public void testMakeOrderCartWithUnavailableItems() {

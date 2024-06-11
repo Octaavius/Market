@@ -3,7 +3,6 @@ package com.uj.demo.demo.services;
 import static org.junit.jupiter.api.Assertions.*;
 import com.uj.demo.demo.models.User;
 import com.uj.demo.demo.repositories.UserRepository;
-import com.uj.demo.demo.services.UserService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.BeforeEach;
 import org.mockito.InjectMocks;

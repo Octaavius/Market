@@ -3,6 +3,7 @@ package com.uj.demo.demo.services;
 import static org.mockito.Mockito.*;
 import static org.junit.jupiter.api.Assertions.*;
 
+import com.uj.demo.demo.exceptions.UserNotExistsException;
 import com.uj.demo.demo.models.Product;
 import com.uj.demo.demo.models.ProductType;
 import com.uj.demo.demo.models.Sex;
@@ -40,14 +41,14 @@ public class ProfileServiceTest {
         MockitoAnnotations.openMocks(this);
     }
 
-    /*@Test
+    @Test
     public void testShowProfileUserNotLoggedIn() {
         when(session.getAttribute("user")).thenReturn(null);
 
-        String result = profileService.showProfile(model, session, productService);
-
-        assertEquals("redirect:/login", result);
-    }*/
+        assertThrows(UserNotExistsException.class, () -> {
+                    profileService.showProfile(model, session, productService);
+                });
+    }
 
     @Test
     public void testShowProfileWithEmptyCart() {
